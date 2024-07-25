@@ -10,7 +10,7 @@ IMPORTANT: This readme.md guide will walk through users on the Windows operating
 
 ## Running OpGrace
 
-This section will walk through how to set up OpGrace for the first time using the WIndows IIS Manager.
+This section will walk through how to set up OpGrace for the first time using the Windows IIS Manager.
 
 ! In some instances, OpGrace will require the PocketBase backend in order to run. To do this, simply `cd` into `./core/pb` and run the command `./pocketbase serve`.
 
@@ -20,7 +20,7 @@ This section will walk through how to set up OpGrace for the first time using th
 4. On the right panel, click on `Add Website...`
 5. Configure the website to your choice, making sure to configure `Content Directory > Physical Path` to the OpGrace folder (NOT one of the subfolders or files).
 6. Make sure that `Start Website immediately` is checked, and press `OK`. If the Website doesn't launch, simply head over to `http://localhost:[port you assigned earlier]` in a browser of your choice.
-7. You're all done! Enjoy!
+7. You're all done. Enjoy!
 
 ## Contributing
 
