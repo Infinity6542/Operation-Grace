@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ann</title>
+    <script>
+      console.log("%cAnnouncements Module", "color: #f00; font-size: 20px;");
+      console.log("Thanks for using the official Announcements Module!");
+      console.log(
+        "This Module uses ES Modules. Although it is supported in all major browsers as of May 2018, there may be compatibility issues with Opera clients. Firefox clients, which lack support over a range of features, should work perfectly fine, as this Module doesn't use any of the features Firefox lacks. In specific scenarios, all browsers but Firefox do not support ES Modules in Worklets, and it is recommended to check if that is the issue first."
+      );
+      console.log(
+        "This is a demonstration/prototype of the Announcements Module, part of Operation ???. Redistribution is strictly prohibited. Content you see on this page are not final."
+      );
+      console.log(
+        "%c (c) Copyright 2024 James Chen. All Rights Reserved.",
+        "color: #525259; font-size: 10px;"
+      );
+      console.log("Now loading the Announcements Module...");
+      console.log(
+        "%cMade with ❤️ by James Chen, operating under the Infinity Media Group and its subsidiaries and affiliates.",
+        "color: #525259; font-size: 10px;"
+      );
+    </script>
+    <script type="module" src="/core/pb/dist/pocketbase.umd.js"></script>
+    <script type="module" src="./pb.js"></script>
+    <script type="module" src="./assignment.js"></script>
+  </head>
+  <body>
+    <div>
+      <h1 id="heading"></h1>
+      <p id="paragraph"></p>
+      <img src="" alt="" id="image">
+    </div>
+  </body>
+</html>

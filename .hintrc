@@ -1,0 +1,21 @@
+/* ---------------------------------------------------------------------  */
+// For your convenience, certain "hints" have been disabled in this file. |
+//                                                                        \
+// These hints include accessibility for screenreaders, which are not only|
+// not required, but are redundant for the project, but will affect the   \
+// performance of the project. You may enable them if you wish, but it is |
+// not recommended to do so.                                              \
+/* ---------------------------------------------------------------------  */
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "axe/text-alternatives": [
+      "default",
+      {
+        "frame-title": "off"
+      }
+    ]
+  }
+}
