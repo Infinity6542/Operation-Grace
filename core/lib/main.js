@@ -6,15 +6,15 @@ import stack from "/modules/announcements/pb.js";
 //   "xFi7P&Fiq7k,2'z"
 // );
 
-console.log("%cWelcome to Operation ???", "font-size: 20px;");
-console.log("%cOperation ??? version 0.0.1", "color: #3780cc;");
+console.log("%cWelcome to Operation Grace", "font-size: 20px;");
+console.log("%cOperation Grace version 0.0.1", "color: #3780cc;");
 console.log(
-  "This is a demonstration/prototype of Operation ???. Redistribution is strictly prohibited. Content you see on this page are not final."
+  "This is a demonstration/prototype of Operation Grace. Redistribution is strictly prohibited. Content you see on this page are not final."
 );
 console.log(
   "Core, by default, does not come with any modules. As a result, some modules have been provided for your convenience. Additional displays, such as the colour tests, have also been provided."
 );
-console.info("Now loading Operation ???...");
+console.info("Now loading Operation Grace...");
 console.log(
   "%c (c) Copyright 2024 James Chen. All Rights Reserved.",
   "color: #525259;"
