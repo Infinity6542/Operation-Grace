@@ -14,7 +14,7 @@ This section will walk through how to set up OpGrace for the first time using th
 
 ! In some instances, OpGrace will require the PocketBase backend in order to run. To do this, simply `cd` into `./core/pb` and run the command `./pocketbase serve`.
 
-1. Firstly, ensure that the Internet Information Services (IIS) is enabled. Head to the `Start Menu > Turn WIndows features on or off > ENABLE Internet Information Services`.
+1. Firstly, ensure that the Internet Information Services (IIS) is enabled. Head to the `Start Menu > Turn Windows features on or off > ENABLE Internet Information Services`.
 2. Open the IIS Manager through a program of your choice (or just use the Start Menu).
 3. On the left panel, expand your device name, then select `Sites`.
 4. On the right panel, click on `Add Website...`
