@@ -153,7 +153,8 @@ console.info(
 // The below line creates a new queue. It is recommended to have one queue only.
 const queue = new Queue();
 
-// Adding test screens to queue
+//* TEST SCREENS
+// Remove before putting into production
 console.log(
   queue.queue(new el("/core/tests/blue.html", "slide_right_left", 10000))
 );
