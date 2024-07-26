@@ -6,14 +6,18 @@ This document provides a short insight into Operation Grace (“OpGrace”, “s
 
 Operation Grace is a modular platform powered by the browser, designed to cycle through multiple different outputs, slideshow-style. OpGrace includes multiple modules by default, although using them is completely optional, and the client may swap them out for a module of their choice.
 
-IMPORTANT: This readme.md guide will walk through users on the Windows operating system only for now. If there are problems with Linux machines, contact the developer for assistance.
+> ⚠️ Warning
+> 
+> This readme.md guide will walk through users on the Windows operating system only for now. If there are problems with Linux machines, contact the developer for assistance.
 
 ## Running OpGrace
 
 This section will walk through how to set up OpGrace for the first time using the Windows IIS Manager.<br>
 <sup>Want access to the latest bleeding edge features? Download the source code from the Buffer or, if you dare, the Development branch to gain access to the latest and (sometimes) greatest!</sup>
 
-! In some instances, OpGrace will require the PocketBase backend in order to run. To do this, simply `cd` into `./core/pb` and run the command `./pocketbase serve`.
+> ℹ️ IMPORTANT
+> 
+> In some instances, OpGrace will require the PocketBase backend in order to run. To do this, simply `cd` into `./core/pb` and run the command `./pocketbase serve`.
 
 1. Firstly, ensure that the Internet Information Services (IIS) is enabled. Head to the `Start Menu > Turn Windows features on or off > ENABLE Internet Information Services`.
 2. Open the IIS Manager through a program of your choice (or just use the Start Menu).
