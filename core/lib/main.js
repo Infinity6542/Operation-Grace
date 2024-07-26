@@ -179,7 +179,6 @@ console.log(
 );
 
 // Adding announcement screens to queue
-//TODO: Write localstorage function to cycle through announcements
 for (let i = stack.length; i > 0; i--) {
   console.log(
     queue.queue(

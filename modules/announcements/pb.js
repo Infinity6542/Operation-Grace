@@ -12,7 +12,23 @@ const announcementsRaw = await pb.collection("announcements").getFullList({
   sort: "-created",
   filter: "validUntil != null && validUntil > @now",
 });
-let count = announcementsRaw.length;
+let count = Number(announcementsRaw.length);
+let pos = Number(localStorage.getItem("pos"));
+
+if (
+  localStorage.getItem("count") == undefined ||
+  localStorage.getItem("pos") == undefined
+) {
+  localStorage.setItem("count", count);
+  localStorage.setItem("pos", 0);
+}
+
+console.log(pos, count);
+
+if (pos >= count) {
+  localStorage.setItem("pos", 0);
+  pos = 0;
+}
 
 // Process announcements
 function processAnnouncement(x) {
@@ -25,7 +41,6 @@ function processAnnouncement(x) {
     x.id +
     "/" +
     x.img;
-  announcementsRaw.shift();
   new ann(title, msg, img);
 }
 
@@ -52,11 +67,11 @@ pb.collection("announcements").subscribe("*", function (e) {
 });
 
 console.log(`There is/are ${count} active announcement(s).`);
-let i = count;
-for (i > 0; i--;) {
-  processAnnouncement(announcementsRaw[0]);
-}
+processAnnouncement(announcementsRaw[pos]);
+localStorage.setItem("pos", pos + 1);
+console.log(localStorage.getItem("pos"));
+pos++;
 
-await i == 0;
+// (await count) == 0;
 
 export default stack;
