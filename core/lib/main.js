@@ -38,11 +38,9 @@ function removeClasses(e) {
 
 function animate(x, y) {
   y.style.display = "";
+  y.classList.add(x.anim + "_from");
+  y.style.zIndex = 500;
   sleep(100).then(() => {
-    y.classList.add(x.anim + "_from");
-    y.style.zIndex = 500;
-  });
-  sleep(200).then(() => {
     y.classList.add(x.anim + "_to");
   });
   sleep(x.dur).then(() => {
@@ -91,6 +89,18 @@ class Queue {
     this.frontIndex++;
     return item;
   }
+  shuffle() {
+    let currentIndex = this.items.length;
+    while (currentIndex != 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      // And swap it with the current element.
+      [this.items[currentIndex], this.items[randomIndex]] = [
+        this.items[randomIndex],
+        this.items[currentIndex],
+      ];
+    }
+  }
   peek() {
     return this.items[this.frontIndex];
   }
@@ -135,15 +145,19 @@ class el {
   }
 }
 
-console.info("Queue and core elements loaded successfully. Loading the self-destruct function...");
+console.info(
+  "Queue and core elements loaded successfully. Loading the self-destruct function..."
+);
 
 function destruct() {
-  console.info("Self-destruct function initiated. Now destructing everything...");
-  window.alert("Self-destruct function initiated.")
+  console.info(
+    "Self-destruct function initiated. Now destructing everything..."
+  );
+  window.alert("Self-destruct function initiated.");
   queue.destruct().then((e) => {
     console.error(e);
   });
-  console.info("Self-destruction process completed.")
+  console.info("Self-destruction process completed.");
 }
 
 console.info(
@@ -176,6 +190,9 @@ for (let i = stack.length; i > 0; i--) {
 }
 
 console.info("Beginning queue cycle.");
+
+// Shuffle the queue. This step is optional.
+queue.shuffle();
 
 // Prematurely cycles the queue to start the cycle
 cycle(o1);
