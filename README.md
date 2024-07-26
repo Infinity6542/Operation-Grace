@@ -11,6 +11,7 @@ IMPORTANT: This readme.md guide will walk through users on the Windows operating
 ## Running OpGrace
 
 This section will walk through how to set up OpGrace for the first time using the Windows IIS Manager.
+<sub><sup>Want access to the latest bleeding edge features? Download the source code from the Buffer or, if you dare, the Development branch to gain access to the latest and (sometimes) greatest!</sub></sup>
 
 ! In some instances, OpGrace will require the PocketBase backend in order to run. To do this, simply `cd` into `./core/pb` and run the command `./pocketbase serve`.
 
