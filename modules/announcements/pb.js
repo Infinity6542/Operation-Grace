@@ -1,8 +1,8 @@
 const pb = new PocketBase("http://127.0.0.1:8090/");
 
 await pb.admins.authWithPassword(
-  "james.chen41@education.nsw.gov.au",
-  "xFi7P&Fiq7k,2'z"
+  [email],
+  [pass]
 );
 
 let stack = [];
