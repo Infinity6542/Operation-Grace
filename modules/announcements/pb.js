@@ -12,9 +12,12 @@ const announcementsRaw = await pb.collection("announcements").getFullList({
   sort: "-created",
   filter: "validUntil != null && validUntil > @now",
 });
+
+// Announcements stats
 let count = Number(announcementsRaw.length);
 let pos = Number(localStorage.getItem("pos"));
 
+// If not declared, declare
 if (
   localStorage.getItem("count") == undefined ||
   localStorage.getItem("pos") == undefined
@@ -23,8 +26,7 @@ if (
   localStorage.setItem("pos", 0);
 }
 
-console.log(pos, count);
-
+// Begin the cycle again
 if (pos >= count) {
   localStorage.setItem("pos", 0);
   pos = 0;
@@ -68,10 +70,10 @@ pb.collection("announcements").subscribe("*", function (e) {
 
 console.log(`There is/are ${count} active announcement(s).`);
 processAnnouncement(announcementsRaw[pos]);
+
+// Update position in cycle
 localStorage.setItem("pos", pos + 1);
 console.log(localStorage.getItem("pos"));
 pos++;
-
-// (await count) == 0;
 
 export default stack;
