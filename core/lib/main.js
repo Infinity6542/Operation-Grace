@@ -100,9 +100,9 @@ class Queue {
       ];
     }
   }
-  peek() {
-    return this.items[this.frontIndex];
-  }
+  // nextInLine() {
+  //   return this.items[this.frontIndex];
+  // }
   get printQueue() {
     return this.items;
   }
@@ -126,7 +126,7 @@ class Queue {
     let v = arr[0];
     if (a === v) {
       console.error(
-        "Ugh. Something went wrong when pushing the array. Trying again..."
+        "[CRIT] [QUEU-CLASS] [CYCLE] [SHIFT] The queue was not able to be shifted. Trying again..."
       );
       arr.push(arr.shift());
     }
