@@ -124,11 +124,13 @@ class Queue {
     }
     arr.push(arr.shift());
     let v = arr[0];
-    if (a === v) {
-      console.error(
-        "[CRIT] [QUEU-CLASS] [CYCLE] [SHIFT] The queue was not able to be shifted. Trying again..."
-      );
-      arr.push(arr.shift());
+    if (arr.length != 1) {
+      if (a === v) {
+        console.error(
+          "[CRIT] [QUEU-CLASS] [CYCLE] [SHIFT] The queue was not able to be shifted. Trying again..."
+        );
+        arr.push(arr.shift());
+      }
     }
     let temp = x;
     x = y;
