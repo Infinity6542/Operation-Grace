@@ -68,12 +68,15 @@ pb.collection("announcements").subscribe("*", function (e) {
   location.reload();
 });
 
-console.log(`There is/are ${count} active announcement(s).`);
-processAnnouncement(announcementsRaw[pos]);
+if (announcementsRaw.length != 0) {
+  processAnnouncement(announcementsRaw[pos]);
 
-// Update position in cycle
-localStorage.setItem("pos", pos + 1);
-console.log(localStorage.getItem("pos"));
-pos++;
+  // Update position in cycle
+  localStorage.setItem("pos", pos + 1);
+  console.log(localStorage.getItem("pos"));
+  pos++;
+}
+
+console.log(`There is/are ${count} active announcement(s).`);
 
 export default stack;
