@@ -70,4 +70,4 @@ class Queue {
   }
 }
 
-export default queue;
+export default Queue;

@@ -1,6 +1,6 @@
 //TODO: Implement announcements collection in PB
 import stack from "/modules/announcements/pb.js";
-import queue from "/core/lib/queue.js";
+import Queue from "/core/lib/queue.js";
 
 console.log("%cWelcome to Operation Grace", "font-size: 20px;");
 console.log("%cOperation Grace version 0.0.1", "color: #3780cc;");
