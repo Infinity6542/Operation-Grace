@@ -159,6 +159,7 @@ function destruct() {
     console.error(e);
   });
   console.info("Self-destruction process completed.");
+  console.info("Note that only the queue has been terminated.")
 }
 
 console.info(
