@@ -51,7 +51,7 @@ function animate(x, y) {
 }
 
 // Cycle function
-// Doesn't actually cycle, calls the cycle function within the queue class
+// Doesn't actually cycle, it calls the cycle function within the queue class
 function cycle(x) {
   queue.cycle(x, queue.items[0]);
   if (queue.items[0].origin === "core") {
