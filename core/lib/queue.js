@@ -1,3 +1,5 @@
+const o1 = document.getElementById("0");
+const o2 = document.getElementById("1");
 class Queue {
   constructor() {
     this.items = [];
