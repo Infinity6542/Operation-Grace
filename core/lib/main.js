@@ -1,10 +1,6 @@
+//TODO: Implement announcements collection in PB
 import stack from "/modules/announcements/pb.js";
-// const pb = new PocketBase("http://127.0.0.1:8090/");
-
-// await pb.admins.authWithPassword(
-//   "james.chen41@education.nsw.gov.au",
-//   "xFi7P&Fiq7k,2'z"
-// );
+import Queue from "/core/lib/queue.js";
 
 console.log("%cWelcome to Operation Grace", "font-size: 20px;");
 console.log("%cOperation Grace version 0.0.1", "color: #3780cc;");
@@ -29,6 +25,7 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// Removes all classes from an element
 function removeClasses(e) {
   var classList = e.classList;
   while (classList.length > 0) {
@@ -36,6 +33,7 @@ function removeClasses(e) {
   }
 }
 
+// Animation process
 function animate(x, y) {
   y.style.display = "";
   y.classList.add(x.anim + "_from");
@@ -52,6 +50,8 @@ function animate(x, y) {
   });
 }
 
+// Cycle function
+// Doesn't actually cycle, it calls the cycle function within the queue class
 function cycle(x) {
   queue.cycle(x, queue.items[0]);
   if (queue.items[0].origin === "core") {
@@ -64,77 +64,6 @@ function cycle(x) {
 console.info(
   "Utility functions loaded successfully. Loading queue and core element..."
 );
-
-class Queue {
-  constructor() {
-    this.items = [];
-    this.frontIndex = 0;
-    this.backIndex = 0;
-  }
-  destruct() {
-    delete this.items;
-    delete this.frontIndex;
-    delete this.backIndex;
-    delete this;
-  }
-  queue(item) {
-    this.items[this.backIndex] = item;
-    this.backIndex++;
-    console.log(item + " added to queue");
-    return item + " added to queue";
-  }
-  dequeue() {
-    const item = this.items[this.frontIndex];
-    delete this.items[this.frontIndex];
-    this.frontIndex++;
-    return item;
-  }
-  shuffle() {
-    let currentIndex = this.items.length;
-    while (currentIndex != 0) {
-      let randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      // And swap it with the current element.
-      [this.items[currentIndex], this.items[randomIndex]] = [
-        this.items[randomIndex],
-        this.items[currentIndex],
-      ];
-    }
-  }
-  peek() {
-    return this.items[this.frontIndex];
-  }
-  get printQueue() {
-    return this.items;
-  }
-  cycle(x, e) {
-    let arr = this.items;
-    let y;
-    let a = arr[0];
-    if (x === o1) {
-      y = o2;
-      o1.src = e.src;
-    } else if (x === o2) {
-      y = o1;
-      o2.src = e.src;
-    } else {
-      x = o1;
-      y = o2;
-      o1.src = e.src;
-    }
-    arr.push(arr.shift());
-    let v = arr[0];
-    if (a === v) {
-      console.error(
-        "Ugh. Something went wrong when pushing the array. Trying again..."
-      );
-      arr.push(arr.shift());
-    }
-    let temp = x;
-    x = y;
-    y = temp;
-  }
-}
 
 class el {
   constructor(src, animation, duration) {
@@ -149,6 +78,7 @@ console.info(
   "Queue and core elements loaded successfully. Loading the self-destruct function..."
 );
 
+// Kills everything
 function destruct() {
   console.info(
     "Self-destruct function initiated. Now destructing everything..."
@@ -158,6 +88,7 @@ function destruct() {
     console.error(e);
   });
   console.info("Self-destruction process completed.");
+  console.info("Note that only the queue has been terminated.")
 }
 
 console.info(
@@ -169,6 +100,7 @@ const queue = new Queue();
 
 //* TEST SCREENS
 // Remove before putting into production
+//TODO: Move test screens into the Modules collection implementation
 console.log(
   queue.queue(new el("/core/tests/blue.html", "slide_right_left", 10000))
 );
@@ -177,7 +109,6 @@ console.log(queue.queue(new el("/core/tests/green.html", "opacity", 10000)));
 console.log(
   queue.queue(new el("/core/tests/yellow.html", "slide_left_right", 10000))
 );
-
 // Adding announcement screens to queue
 for (let i = stack.length; i > 0; i--) {
   console.log(
