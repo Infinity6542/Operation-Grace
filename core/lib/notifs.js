@@ -1,13 +1,14 @@
 //TODO: Make the notification system
-class notif {
-    constructor(title, msg, icn) {
+var notif = /** @class */ (function () {
+    function notif(title, msg, icn) {
         this.title = title;
         this.msg = msg;
         this.icn = icn;
     }
-}
-class clock {
-    constructor(type) {
+    return notif;
+}());
+var clock = /** @class */ (function () {
+    function clock(type) {
         if (type == "digital") {
             //TODO: Implement solaris digital clock
             // Will probably use this:
@@ -20,5 +21,5 @@ class clock {
             // but animated.
         }
     }
-}
-//# sourceMappingURL=notifs.js.map
+    return clock;
+}());
