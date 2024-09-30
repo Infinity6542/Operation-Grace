@@ -3,7 +3,7 @@ import stack from "/modules/announcements/pb.js";
 import Queue from "/core/lib/queue.js";
 
 console.log("%cWelcome to Operation Grace", "font-size: 20px;");
-console.log("%cOperation Grace version 0.0.1", "color: #3780cc;");
+console.log("%cOperation Grace version 0.0.2", "color: #3780cc;");
 console.log(
   "This is a demonstration/prototype of Operation Grace. Redistribution is strictly prohibited. Content you see on this page are not final."
 );

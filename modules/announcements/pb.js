@@ -10,6 +10,8 @@ if (
 ) {
   const login = prompt("Login");
   const pass = prompt("Password");
+  localStorage.setItem("login", login);
+  localStorage.setItem("pass", pass);
   signin(login, pass);
 } else {
   const login = localStorage.getItem("login");
