@@ -5,6 +5,7 @@ if (!pb.authStore.isValid) {
     const pass = localStorage.getItem("pass");
     await pb.admins.authWithPassword(login, pass);
 }
+// To logout, simply call "pb.authStore.clear()"
 
 let stack = [];
 
