@@ -1,22 +1,9 @@
 const pb = new PocketBase("http://127.0.0.1:8090/");
 
-async function signin(login, pass) {
-  await pb.admins.authWithPassword(login, pass);
-}
-
-if (
-  localStorage.getItem("login") == null ||
-  localStorage.getItem("pass") == null
-) {
-  const login = prompt("Login");
-  const pass = prompt("Password");
-  localStorage.setItem("login", login);
-  localStorage.setItem("pass", pass);
-  signin(login, pass);
-} else {
-  const login = localStorage.getItem("login");
-  const pass = localStorage.getItem("pass");
-  signin(login, pass);
+if (!pb.authStore.isValid) {
+    const login = localStorage.getItem("login");
+    const pass = localStorage.getItem("pass");
+    await pb.admins.authWithPassword(login, pass);
 }
 
 let stack = [];
