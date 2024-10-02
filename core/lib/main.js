@@ -79,7 +79,7 @@ console.info(
 );
 
 // Kills everything
-function activateKillSwitch() {
+function killMeAndMyFriendsAndMyFamily() {
   console.info(
     "Self-destruct function initiated. Now destructing everything..."
   );
