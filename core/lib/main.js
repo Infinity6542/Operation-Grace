@@ -79,7 +79,7 @@ console.info(
 );
 
 // Kills everything
-function destruct() {
+function activateKillSwitch() {
   console.info(
     "Self-destruct function initiated. Now destructing everything..."
   );
@@ -87,8 +87,19 @@ function destruct() {
   queue.destruct().then((e) => {
     console.error(e);
   });
+  pb.authStore.clear();
+  localStorage.clear();
+  sessionStorage.clear();
+  document.cookie.split(";").forEach((cookie) => {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  });
   console.info("Self-destruction process completed.");
-  console.info("Note that only the queue has been terminated.")
+  console.info("Automatically closing the tab in 5 seconds...")
+  sleep(5000).then(() => {
+    window.close();
+  });
 }
 
 console.info(
