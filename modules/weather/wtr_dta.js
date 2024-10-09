@@ -34,9 +34,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-// Replace 'YOUR_API_KEY' with your actual Tomorrow.io API key
-var API_KEY = "l4k0PcH7aTO4GcK2mZcuk9KMDJLa4og0";
-var LOCATION = { lat: -33.839, lon: 151.207 }; // Coordinates for North Sydney
+if (localStorage.getItem("target") === null || localStorage.getItem("key") === null) {
+    localStorage.setItem("key", prompt("Please enter your Tomorrow.io API key:"));
+    localStorage.setItem("location", prompt("Please enter your location (lat: [lat], lon: [lon]):"));
+}
+var API_KEY = localStorage.getItem("key");
+var LOCATION = JSON.parse("{ " + localStorage.getItem("location" + " }")); // Coordinates for North Sydney
 var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION.lat, ",").concat(LOCATION.lon, "&fields=temperature,precipitationProbability&timesteps=1h&units=metric&apikey=").concat(API_KEY);
 function getWeatherData() {
     return __awaiter(this, void 0, void 0, function () {
@@ -59,9 +62,9 @@ function getWeatherData() {
                     currentPrecipitation = currentWeather.values.precipitationProbability;
                     console.log("Current temperature: ".concat(currentTemperature, "\u00B0C"));
                     console.log("Current rain probability: ".concat(currentPrecipitation, "%"));
-                    // Extract next 24 hours weather data (hourly data)
+                    // Extract next 12 hours weather data (hourly)
                     console.log("Next 24-hour forecast for North Sydney:");
-                    for (i = 0; i < 24; i++) {
+                    for (i = 0; i < 12; i++) {
                         hourlyWeather = data.data.timelines[0].intervals[i];
                         temperature = hourlyWeather.values.temperature;
                         precipitation = hourlyWeather.values.precipitationProbability;

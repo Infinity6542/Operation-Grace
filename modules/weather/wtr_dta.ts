@@ -1,6 +1,10 @@
-// Replace 'YOUR_API_KEY' with your actual Tomorrow.io API key
-const API_KEY = "l4k0PcH7aTO4GcK2mZcuk9KMDJLa4og0";
-const LOCATION = { lat: -33.839, lon: 151.207 }; // Coordinates for North Sydney
+if (localStorage.getItem("target") === null || localStorage.getItem("key") === null) {
+  localStorage.setItem("key", prompt("Please enter your Tomorrow.io API key:"));
+  localStorage.setItem("location", prompt("Please enter your location (lat: [lat], lon: [lon]):"));
+}
+
+const API_KEY = localStorage.getItem("key");
+const LOCATION = JSON.parse("{ " + localStorage.getItem("location" + " }")); // Coordinates for North Sydney
 const API_URL = `https://api.tomorrow.io/v4/timelines?location=${LOCATION.lat},${LOCATION.lon}&fields=temperature,precipitationProbability&timesteps=1h&units=metric&apikey=${API_KEY}`;
 
 async function getWeatherData() {
@@ -19,15 +23,14 @@ async function getWeatherData() {
     console.log(`Current temperature: ${currentTemperature}°C`);
     console.log(`Current rain probability: ${currentPrecipitation}%`);
 
-    // Extract next 24 hours weather data (hourly data)
+    // Extract next 12 hours weather data (hourly)
     console.log(`Next 24-hour forecast for North Sydney:`);
 
-    for (let i = 0; i < 24; i++) {
+    for (let i = 0; i < 12; i++) {
       const hourlyWeather = data.data.timelines[0].intervals[i];
       const temperature = hourlyWeather.values.temperature;
       const precipitation = hourlyWeather.values.precipitationProbability;
       const time = hourlyWeather.startTime;
-
       console.log(
         `Time: ${time}, Temperature: ${temperature}°C, Rain Probability: ${precipitation}%`
       );
