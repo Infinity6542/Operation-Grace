@@ -79,14 +79,13 @@ console.info(
 );
 
 // Kills everything
-function killMeAndMyFriendsAndMyFamily() {
+// Call via "window.parent.killMeAndMyFriendsAndMyFamily();"
+window.killMeAndMyFriendsAndMyFamily = function() {
   console.info(
     "Self-destruct function initiated. Now destructing everything..."
   );
   window.alert("Self-destruct function initiated.");
-  queue.destruct().then((e) => {
-    console.error(e);
-  });
+  queue.destruct();
   pb.authStore.clear();
   localStorage.clear();
   sessionStorage.clear();
