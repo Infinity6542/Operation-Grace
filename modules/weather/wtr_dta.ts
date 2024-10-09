@@ -32,7 +32,7 @@ async function getWeatherData() {
       const precipitation = hourlyWeather.values.precipitationProbability;
       const time = hourlyWeather.startTime;
       console.log(
-        "Time: ${time}, Temperature: ${temperature}°C, Rain Probability: ${precipitation}%"
+        `Time: ${time}, Temperature: ${temperature}°C, Rain Probability: ${precipitation}%`
       );
     }
   } catch (error) {
