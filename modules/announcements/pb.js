@@ -1,6 +1,8 @@
-const pb = new PocketBase("http://127.0.0.1:8090/");
+var pb = new PocketBase("http://127.0.0.1:8090/");
 
 if (!pb.authStore.isValid) {
+    localStorage.setItem("login", prompt("Enter your login:"));
+    localStorage.setItem("pass", prompt("Enter your password:"));
     const login = localStorage.getItem("login");
     const pass = localStorage.getItem("pass");
     await pb.admins.authWithPassword(login, pass);
