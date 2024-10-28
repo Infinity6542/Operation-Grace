@@ -20,8 +20,8 @@ async function getWeatherData() {
     const currentTemperature = currentWeather.values.temperature;
     const currentPrecipitation = currentWeather.values.precipitationProbability;
 
-    console.log("Current temperature: ${currentTemperature}°C");
-    console.log("Current rain probability: ${currentPrecipitation}%");
+    console.log(`Current temperature: ${currentTemperature}°C`);
+    console.log(`Current rain probability: ${currentPrecipitation}%`);
 
     // Extract next 12 hours weather data (hourly)
     console.log("Next 24-hour forecast for " + LOCATION.lat + ", " + LOCATION.lon + ":");
@@ -40,3 +40,4 @@ async function getWeatherData() {
   }
 }
 getWeatherData();
+// TODO: Graph the output data
