@@ -34,16 +34,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-if (localStorage.getItem("target") === null || localStorage.getItem("key") === null) {
-    localStorage.setItem("key", prompt("Please enter your Tomorrow.io API key:"));
-    localStorage.setItem("location", prompt("Please enter your location (lat: [lat], lon: [lon]):"));
+if (localStorage.getItem("target") === null ||
+    localStorage.getItem("key") === null) {
+    var x = prompt("Please enter your Tomorrow.io API key:");
+    var y = prompt('Please enter your location ("lat":"[lat]","lon":"[lon])"');
+    localStorage.setItem("key", x);
+    localStorage.setItem("location", y);
 }
 var API_KEY = localStorage.getItem("key");
-var LOCATION = JSON.parse("{ " + localStorage.getItem("location" + " }")); // Coordinates for North Sydney
-var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION.lat, ",").concat(LOCATION.lon, "&fields=temperature,precipitationProbability&timesteps=1h&units=metric&apikey=").concat(API_KEY);
-function getWeatherData() {
+var LOCATION = JSON.parse("{ " + localStorage.getItem("location") + " }"); // Coordinates for North Sydney
+var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION.lat, ",").concat(LOCATION.lon, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h&units=metric&apikey=").concat(API_KEY);
+function updateWeatherDisplay() {
     return __awaiter(this, void 0, void 0, function () {
-        var response, data, currentWeather, currentTemperature, currentPrecipitation, i, hourlyWeather, temperature, precipitation, time, error_1;
+        var response, data, weatherData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -52,33 +55,47 @@ function getWeatherData() {
                 case 1:
                     response = _a.sent();
                     if (!response.ok) {
-                        throw new Error("HTTP error! status: ".concat(response.status));
+                        throw new Error("Failed to fetch weather data");
+                    }
+                    else {
+                        console.log("[WTR] [LOG] Data fetched!");
                     }
                     return [4 /*yield*/, response.json()];
                 case 2:
                     data = _a.sent();
-                    currentWeather = data.data.timelines[0].intervals[0];
-                    currentTemperature = currentWeather.values.temperature;
-                    currentPrecipitation = currentWeather.values.precipitationProbability;
-                    console.log("Current temperature: ".concat(currentTemperature, "\u00B0C"));
-                    console.log("Current rain probability: ".concat(currentPrecipitation, "%"));
-                    // Extract next 12 hours weather data (hourly)
-                    console.log("Next 24-hour forecast for North Sydney:");
-                    for (i = 0; i < 12; i++) {
-                        hourlyWeather = data.data.timelines[0].intervals[i];
-                        temperature = hourlyWeather.values.temperature;
-                        precipitation = hourlyWeather.values.precipitationProbability;
-                        time = hourlyWeather.startTime;
-                        console.log("Time: ".concat(time, ", Temperature: ").concat(temperature, "\u00B0C, Rain Probability: ").concat(precipitation, "%"));
-                    }
+                    weatherData = data.data.timelines[0].intervals[0].values;
+                    console.log("[WTR] [LOG] Updating current information");
+                    document.getElementById("location").textContent =
+                        "North Sydney"; // Replace with actual location data if needed
+                    document.getElementById("temp").textContent =
+                        weatherData.temperature.toFixed(1);
+                    document.getElementById("feelsLikeTemp").textContent =
+                        weatherData.temperatureApparent.toFixed(1);
+                    document.getElementById("highTemp").textContent =
+                        weatherData.temperatureMax.toFixed(1);
+                    document.getElementById("lowTemp").textContent =
+                        weatherData.temperatureMin.toFixed(1);
+                    console.log("[WTR] [LOG] Updating hourly forecast");
+                    data.data.timelines[0].intervals.slice(0, 12).forEach(function (interval, index) {
+                        var tempElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #temp"));
+                        var chanceElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #chance"));
+                        var rainElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #rain"));
+                        var timeElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #time"));
+                        tempElem.textContent = interval.values.temperature.toFixed(1);
+                        chanceElem.textContent =
+                            interval.values.precipitationProbability.toFixed(0);
+                        rainElem.textContent = interval.values.precipitationIntensity.toFixed(1);
+                        timeElem.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                    });
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
-                    console.error("Error fetching the weather data:", error_1);
+                    console.error("Error updating weather display:", error_1);
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
         });
     });
 }
-getWeatherData();
+// Call the function to update the display on load
+updateWeatherDisplay();
