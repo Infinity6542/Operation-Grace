@@ -1,4 +1,4 @@
-> ℹ️ Information
+> ℹ️ ⚠️ **Information** ⚠️ ℹ️
 > 
 > This branch is dedicated to the development of the weather module. You are required to have your own Tomorrow.io API key in order to use this module or to test it.
 
