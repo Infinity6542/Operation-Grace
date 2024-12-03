@@ -1,0 +1,22 @@
+.tempTimeline {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.tempTimeline > * {
+
+}
+
+.circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #000000;
+}
+
+.hori {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

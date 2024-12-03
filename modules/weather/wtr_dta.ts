@@ -1,5 +1,5 @@
 if (
-  localStorage.getItem("target") === null ||
+  localStorage.getItem("location") === null ||
   localStorage.getItem("key") === null
 ) {
   let x = prompt("Please enter your Tomorrow.io API key:");
@@ -22,8 +22,6 @@ async function updateWeatherDisplay() {
       console.log("[WTR] [LOG] Data fetched!");
     }
     const data = await response.json();
-
-    // Assuming you have weather data in the response
     const weatherData = data.data.timelines[0].intervals[0].values;
 
     console.log("[WTR] [LOG] Updating current information");
