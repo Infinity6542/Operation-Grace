@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -37,16 +37,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
     var x = prompt("Please enter your Tomorrow.io API key:");
-    var y = prompt('Please enter your location ("lat":"[lat]","lon":"[lon])"');
+    var y = prompt('Please enter your location');
     localStorage.setItem("key", x);
     localStorage.setItem("location", y);
 }
 var API_KEY = localStorage.getItem("key");
-var LOCATION = JSON.parse("{ " + localStorage.getItem("location") + " }"); // Coordinates for North Sydney
-var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION.lat, ",").concat(LOCATION.lon, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h&units=metric&apikey=").concat(API_KEY);
+var LOCATION = localStorage.getItem("location");
+var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(API_KEY);
 function updateWeatherDisplay() {
     return __awaiter(this, void 0, void 0, function () {
-        var response, data, weatherData, error_1;
+        var response, data, hourlyWeatherData, dailyWeatherData, realtimeWeatherData, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -63,20 +63,23 @@ function updateWeatherDisplay() {
                     return [4 /*yield*/, response.json()];
                 case 2:
                     data = _a.sent();
-                    weatherData = data.data.timelines[0].intervals[0].values;
+                    console.log(data);
+                    hourlyWeatherData = data.data.timelines[1].intervals[0].values;
+                    dailyWeatherData = data.data.timelines[0].intervals[0].values;
+                    realtimeWeatherData = data.data.timelines[2].intervals[0].values;
                     console.log("[WTR] [LOG] Updating current information");
                     document.getElementById("location").textContent =
                         "North Sydney"; // Replace with actual location data if needed
                     document.getElementById("temp").textContent =
-                        weatherData.temperature.toFixed(1);
+                        realtimeWeatherData.temperature.toFixed(1);
                     document.getElementById("feelsLikeTemp").textContent =
-                        weatherData.temperatureApparent.toFixed(1);
+                        realtimeWeatherData.temperatureApparent.toFixed(1);
                     document.getElementById("highTemp").textContent =
-                        weatherData.temperatureMax.toFixed(1);
+                        dailyWeatherData.temperatureMax.toFixed(1);
                     document.getElementById("lowTemp").textContent =
-                        weatherData.temperatureMin.toFixed(1);
+                        dailyWeatherData.temperatureMin.toFixed(1);
                     console.log("[WTR] [LOG] Updating hourly forecast");
-                    data.data.timelines[0].intervals.slice(0, 12).forEach(function (interval, index) {
+                    data.data.timelines[1].intervals.slice(0, 12).forEach(function (interval, index) {
                         var tempElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #temp"));
                         var chanceElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #chance"));
                         var rainElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #rain"));
