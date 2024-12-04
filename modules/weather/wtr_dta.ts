@@ -8,9 +8,11 @@ if (
 	localStorage.setItem("location", y);
 }
 
+const dp = 0;
 const API_KEY = localStorage.getItem("key");
 const LOCATION = localStorage.getItem("location"); 
 const API_URL = `https://api.tomorrow.io/v4/timelines?location=${LOCATION}&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${API_KEY}`;
+window.alert(`All values are rounded to the closest ${dp} decimal places`);
 
 async function updateWeatherDisplay() {
 	try {
@@ -31,13 +33,13 @@ async function updateWeatherDisplay() {
 		(document.getElementById("location") as HTMLElement).textContent =
 			"North Sydney"; // Replace with actual location data if needed
 		(document.getElementById("temp") as HTMLElement).textContent =
-			realtimeWeatherData.temperature.toFixed(1);
+			realtimeWeatherData.temperature.toFixed(dp);
 		(document.getElementById("feelsLikeTemp") as HTMLElement).textContent =
-			realtimeWeatherData.temperatureApparent.toFixed(1);
+			realtimeWeatherData.temperatureApparent.toFixed(dp);
 		(document.getElementById("highTemp") as HTMLElement).textContent =
-			dailyWeatherData.temperatureMax.toFixed(1);
+			dailyWeatherData.temperatureMax.toFixed(dp);
 		(document.getElementById("lowTemp") as HTMLElement).textContent =
-			dailyWeatherData.temperatureMin.toFixed(1);
+			dailyWeatherData.temperatureMin.toFixed(dp);
 
 		console.log("[WTR] [LOG] Updating hourly forecast");
 		data.data.timelines[1].intervals.slice(0, 12).forEach((interval, index) => {
@@ -54,10 +56,10 @@ async function updateWeatherDisplay() {
 				`[data-time="${index + 1}"] #time`
 			) as HTMLElement;
 
-			tempElem.textContent = interval.values.temperature.toFixed(1);
+			tempElem.textContent = interval.values.temperature.toFixed(dp);
 			chanceElem.textContent =
-				interval.values.precipitationProbability.toFixed(0);
-			rainElem.textContent = interval.values.precipitationIntensity.toFixed(1);
+				interval.values.precipitationProbability.toFixed(dp);
+			rainElem.textContent = interval.values.precipitationIntensity.toFixed(dp);
 			timeElem.textContent = new Date(interval.startTime).toLocaleTimeString(
 				[],
 				{ hour: "2-digit", minute: "2-digit" }

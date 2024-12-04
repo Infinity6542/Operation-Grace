@@ -8,8 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
-    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -41,9 +41,11 @@ if (localStorage.getItem("location") === null ||
     localStorage.setItem("key", x);
     localStorage.setItem("location", y);
 }
+var dp = 0;
 var API_KEY = localStorage.getItem("key");
 var LOCATION = localStorage.getItem("location");
 var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(API_KEY);
+window.alert("All values are rounded to the closest ".concat(dp, " decimal places"));
 function updateWeatherDisplay() {
     return __awaiter(this, void 0, void 0, function () {
         var response, data, hourlyWeatherData, dailyWeatherData, realtimeWeatherData, error_1;
@@ -71,23 +73,23 @@ function updateWeatherDisplay() {
                     document.getElementById("location").textContent =
                         "North Sydney"; // Replace with actual location data if needed
                     document.getElementById("temp").textContent =
-                        realtimeWeatherData.temperature.toFixed(1);
+                        realtimeWeatherData.temperature.toFixed(dp);
                     document.getElementById("feelsLikeTemp").textContent =
-                        realtimeWeatherData.temperatureApparent.toFixed(1);
+                        realtimeWeatherData.temperatureApparent.toFixed(dp);
                     document.getElementById("highTemp").textContent =
-                        dailyWeatherData.temperatureMax.toFixed(1);
+                        dailyWeatherData.temperatureMax.toFixed(dp);
                     document.getElementById("lowTemp").textContent =
-                        dailyWeatherData.temperatureMin.toFixed(1);
+                        dailyWeatherData.temperatureMin.toFixed(dp);
                     console.log("[WTR] [LOG] Updating hourly forecast");
                     data.data.timelines[1].intervals.slice(0, 12).forEach(function (interval, index) {
                         var tempElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #temp"));
                         var chanceElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #chance"));
                         var rainElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #rain"));
                         var timeElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #time"));
-                        tempElem.textContent = interval.values.temperature.toFixed(1);
+                        tempElem.textContent = interval.values.temperature.toFixed(dp);
                         chanceElem.textContent =
-                            interval.values.precipitationProbability.toFixed(0);
-                        rainElem.textContent = interval.values.precipitationIntensity.toFixed(1);
+                            interval.values.precipitationProbability.toFixed(dp);
+                        rainElem.textContent = interval.values.precipitationIntensity.toFixed(dp);
                         timeElem.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
                     });
                     return [3 /*break*/, 4];
