@@ -95,7 +95,7 @@ function updateWeatherDisplay() {
                     return [3 /*break*/, 4];
                 case 3:
                     error_1 = _a.sent();
-                    console.error("Error updating weather display:", error_1);
+                    console.error("[WTR] [CRT] [UPD] ", error_1);
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }

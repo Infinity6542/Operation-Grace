@@ -66,7 +66,7 @@ async function updateWeatherDisplay() {
 			);
 		});
 	} catch (error) {
-		console.error("Error updating weather display:", error);
+		console.error("[WTR] [CRT] [UPD] ", error);
 	}
 }
 
