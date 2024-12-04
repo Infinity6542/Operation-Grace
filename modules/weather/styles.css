@@ -1,22 +1,36 @@
+/** General */
+.flexContainer {
+    display: flex;;
+}
+
+.hori {
+    flex-direction: row;
+}
+
+.vert {
+    flex-direction: column;
+}
+
+/** Top half */
+.top {
+
+}
+
+/** Cards */
+
 .tempTimeline {
     display: flex;
     flex-direction: row;
     gap: 20px;
 }
 
-.tempTimeline > * {
+/* .tempTimeline > * {
 
-}
+} */
 
 .circle {
     width: 5px;
     height: 5px;
     border-radius: 50%;
     background-color: #000000;
-}
-
-.hori {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
 }
