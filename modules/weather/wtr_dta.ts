@@ -12,7 +12,6 @@ const dp = 0;
 const API_KEY = localStorage.getItem("key");
 const LOCATION = localStorage.getItem("location"); 
 const API_URL = `https://api.tomorrow.io/v4/timelines?location=${LOCATION}&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${API_KEY}`;
-window.alert(`All values are rounded to the closest ${dp} decimal places`);
 
 async function updateWeatherDisplay() {
 	try {

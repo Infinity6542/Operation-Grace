@@ -45,7 +45,6 @@ var dp = 0;
 var API_KEY = localStorage.getItem("key");
 var LOCATION = localStorage.getItem("location");
 var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(API_KEY);
-window.alert("All values are rounded to the closest ".concat(dp, " decimal places"));
 function updateWeatherDisplay() {
     return __awaiter(this, void 0, void 0, function () {
         var response, data, hourlyWeatherData, dailyWeatherData, realtimeWeatherData, error_1;
