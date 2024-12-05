@@ -3,14 +3,14 @@ if (
 	localStorage.getItem("key") === null
 ) {
 	let x = prompt("Please enter your Tomorrow.io API key:");
-	let y = prompt('Please enter your location');
+	let y = prompt("Please enter your location");
 	localStorage.setItem("key", x);
 	localStorage.setItem("location", y);
 }
 
 const dp = 0;
 const API_KEY = localStorage.getItem("key");
-const LOCATION = localStorage.getItem("location"); 
+const LOCATION = localStorage.getItem("location");
 const API_URL = `https://api.tomorrow.io/v4/timelines?location=${LOCATION}&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${API_KEY}`;
 
 async function updateWeatherDisplay() {
@@ -26,7 +26,7 @@ async function updateWeatherDisplay() {
 		console.log(data);
 		const hourlyWeatherData = data.data.timelines[1].intervals[0].values;
 		const dailyWeatherData = data.data.timelines[0].intervals[0].values;
-    const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
+		const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
 
 		console.log("[WTR] [LOG] Updating current information");
 		(document.getElementById("location") as HTMLElement).textContent =

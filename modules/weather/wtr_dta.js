@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
     var x = prompt("Please enter your Tomorrow.io API key:");
-    var y = prompt('Please enter your location');
+    var y = prompt("Please enter your location");
     localStorage.setItem("key", x);
     localStorage.setItem("location", y);
 }
