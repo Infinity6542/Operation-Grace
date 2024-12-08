@@ -1,3 +1,4 @@
+// [WTR] [WLC]
 if (
 	localStorage.getItem("location") === null ||
 	localStorage.getItem("key") === null
@@ -9,60 +10,96 @@ if (
 }
 
 const dp = 0;
-const API_KEY = localStorage.getItem("key");
-const LOCATION = localStorage.getItem("location");
-const API_URL = `https://api.tomorrow.io/v4/timelines?location=${LOCATION}&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${API_KEY}`;
+const key = localStorage.getItem("key");
+const target = localStorage.getItem("location");
+const api = `https://api.tomorrow.io/v4/timelines?location=${target}&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${key}`;
+
+async function getWeatherData(x?: boolean) {
+	// Call getWeatherData(true) to force using cached data
+	//
+	// getWeatherData() will automatically fetch new data if
+	// "frequency" seconds have elapsed since the last fetch
+	let _t = Date.now();
+	let _tslu = localStorage.getItem("timeSinceLastUpdate");
+	let _frequency = 60000; // milliseconds
+	if (x == true) {
+		console.log("[WTR] [DTA] Using cached data.");
+		let data = JSON.parse(localStorage.getItem("data"));
+		return data;
+	} else {
+		if (x == false || x === null) {
+			if ((_t - parseInt(_tslu)) >= _frequency || _t == null) {
+				// If it has been longer than a minute since the last update
+				try {
+					console.log("[WTR] [DTA] Fetching new data");
+					const response = await fetch(api);
+					if (!response.ok) {
+						throw new Error("[WTR] [DTA] Failed to fetch weather data");
+					} else {
+						console.log("[WTR] [DTA] Request sent");
+					}
+					const data = await response.json();
+					console.log("[WTR] [DTA] Data fetched");
+					console.log(data);
+					localStorage.setItem("data", JSON.stringify(data));
+					localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
+					return data;
+				} catch (error) {
+					console.error("[WTR] [CRT] [GWD] ", error);
+				}
+			} else {
+				console.log(
+					"[WTR] [DTA] It hasn't been a minute since the last fetch. Using cached data."
+				);
+				let data = JSON.parse(localStorage.getItem("data"));
+				return data;
+			}
+		}
+	}
+}
 
 async function updateWeatherDisplay() {
 	try {
-		// Fetch weather data
-		const response = await fetch(API_URL);
-		if (!response.ok) {
-			throw new Error("Failed to fetch weather data");
-		} else {
-			console.log("[WTR] [LOG] Data fetched!");
-		}
-		const data = await response.json();
-		console.log(data);
-		const hourlyWeatherData = data.data.timelines[1].intervals[0].values;
-		const dailyWeatherData = data.data.timelines[0].intervals[0].values;
-		const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
-
-		console.log("[WTR] [LOG] Updating current information");
-		(document.getElementById("location") as HTMLElement).textContent =
-			"North Sydney"; // Replace with actual location data if needed
-		(document.getElementById("temp") as HTMLElement).textContent =
-			realtimeWeatherData.temperature.toFixed(dp);
-		(document.getElementById("feelsLikeTemp") as HTMLElement).textContent =
-			realtimeWeatherData.temperatureApparent.toFixed(dp);
-		(document.getElementById("highTemp") as HTMLElement).textContent =
-			dailyWeatherData.temperatureMax.toFixed(dp);
-		(document.getElementById("lowTemp") as HTMLElement).textContent =
-			dailyWeatherData.temperatureMin.toFixed(dp);
-
-		console.log("[WTR] [LOG] Updating hourly forecast");
-		data.data.timelines[1].intervals.slice(0, 12).forEach((interval, index) => {
-			const tempElem = document.querySelector(
-				`[data-time="${index + 1}"] #temp`
-			) as HTMLElement;
-			const chanceElem = document.querySelector(
-				`[data-time="${index + 1}"] #chance`
-			) as HTMLElement;
-			const rainElem = document.querySelector(
-				`[data-time="${index + 1}"] #rain`
-			) as HTMLElement;
-			const timeElem = document.querySelector(
-				`[data-time="${index + 1}"] #time`
-			) as HTMLElement;
-
-			tempElem.textContent = interval.values.temperature.toFixed(dp);
-			chanceElem.textContent =
-				interval.values.precipitationProbability.toFixed(dp);
-			rainElem.textContent = interval.values.precipitationIntensity.toFixed(dp);
-			timeElem.textContent = new Date(interval.startTime).toLocaleTimeString(
-				[],
-				{ hour: "2-digit", minute: "2-digit" }
-			);
+		await getWeatherData(true).then((data) => {
+			const hourlyWeatherData = data.data.timelines[1].intervals[0].values;
+			const dailyWeatherData = data.data.timelines[0].intervals[0].values;
+			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
+			console.log("[WTR] [LOG] Updating current information");
+			(document.getElementById("location") as HTMLElement).textContent =
+				"North Sydney"; // Replace with actual location data if needed
+			(document.getElementById("temp") as HTMLElement).textContent =
+				realtimeWeatherData.temperature.toFixed(dp);
+			(document.getElementById("feelsLikeTemp") as HTMLElement).textContent =
+				realtimeWeatherData.temperatureApparent.toFixed(dp);
+			(document.getElementById("highTemp") as HTMLElement).textContent =
+				dailyWeatherData.temperatureMax.toFixed(dp);
+			(document.getElementById("lowTemp") as HTMLElement).textContent =
+				dailyWeatherData.temperatureMin.toFixed(dp);
+			console.log("[WTR] [LOG] Updating hourly forecast");
+			data.data.timelines[1].intervals
+				.slice(0, 12)
+				.forEach((interval, index) => {
+					const tempElem = document.querySelector(
+						`[data-time="${index + 1}"] #temp`
+					) as HTMLElement;
+					const chanceElem = document.querySelector(
+						`[data-time="${index + 1}"] #chance`
+					) as HTMLElement;
+					const rainElem = document.querySelector(
+						`[data-time="${index + 1}"] #rain`
+					) as HTMLElement;
+					const timeElem = document.querySelector(
+						`[data-time="${index + 1}"] #time`
+					) as HTMLElement;
+					tempElem.textContent = interval.values.temperature.toFixed(dp);
+					chanceElem.textContent =
+						interval.values.precipitationProbability.toFixed(dp);
+					rainElem.textContent =
+						interval.values.precipitationIntensity.toFixed(dp);
+					timeElem.textContent = new Date(
+						interval.startTime
+					).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+				});
 		});
 	} catch (error) {
 		console.error("[WTR] [CRT] [UPD] ", error);

@@ -34,6 +34,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+// [WTR] [WLC]
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
     var x = prompt("Please enter your Tomorrow.io API key:");
@@ -42,61 +43,106 @@ if (localStorage.getItem("location") === null ||
     localStorage.setItem("location", y);
 }
 var dp = 0;
-var API_KEY = localStorage.getItem("key");
-var LOCATION = localStorage.getItem("location");
-var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(API_KEY);
-function updateWeatherDisplay() {
+var key = localStorage.getItem("key");
+var target = localStorage.getItem("location");
+var api = "https://api.tomorrow.io/v4/timelines?location=".concat(target, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(key);
+function getWeatherData(x) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, data, hourlyWeatherData, dailyWeatherData, realtimeWeatherData, error_1;
+        var _t, _tslu, _frequency, data, response, data, error_1, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, fetch(API_URL)];
+                    _t = Date.now();
+                    _tslu = localStorage.getItem("timeSinceLastUpdate");
+                    _frequency = 60000;
+                    if (!(x == true)) return [3 /*break*/, 1];
+                    console.log("[WTR] [DTA] Using cached data.");
+                    data = JSON.parse(localStorage.getItem("data"));
+                    return [2 /*return*/, data];
                 case 1:
+                    if (!(x == false || x === null)) return [3 /*break*/, 8];
+                    if (!((_t - parseInt(_tslu)) >= _frequency || _t == null)) return [3 /*break*/, 7];
+                    _a.label = 2;
+                case 2:
+                    _a.trys.push([2, 5, , 6]);
+                    console.log("[WTR] [DTA] Fetching new data");
+                    return [4 /*yield*/, fetch(api)];
+                case 3:
                     response = _a.sent();
                     if (!response.ok) {
-                        throw new Error("Failed to fetch weather data");
+                        throw new Error("[WTR] [DTA] Failed to fetch weather data");
                     }
                     else {
-                        console.log("[WTR] [LOG] Data fetched!");
+                        console.log("[WTR] [DTA] Request sent");
                     }
                     return [4 /*yield*/, response.json()];
-                case 2:
+                case 4:
                     data = _a.sent();
+                    console.log("[WTR] [DTA] Data fetched");
                     console.log(data);
-                    hourlyWeatherData = data.data.timelines[1].intervals[0].values;
-                    dailyWeatherData = data.data.timelines[0].intervals[0].values;
-                    realtimeWeatherData = data.data.timelines[2].intervals[0].values;
-                    console.log("[WTR] [LOG] Updating current information");
-                    document.getElementById("location").textContent =
-                        "North Sydney"; // Replace with actual location data if needed
-                    document.getElementById("temp").textContent =
-                        realtimeWeatherData.temperature.toFixed(dp);
-                    document.getElementById("feelsLikeTemp").textContent =
-                        realtimeWeatherData.temperatureApparent.toFixed(dp);
-                    document.getElementById("highTemp").textContent =
-                        dailyWeatherData.temperatureMax.toFixed(dp);
-                    document.getElementById("lowTemp").textContent =
-                        dailyWeatherData.temperatureMin.toFixed(dp);
-                    console.log("[WTR] [LOG] Updating hourly forecast");
-                    data.data.timelines[1].intervals.slice(0, 12).forEach(function (interval, index) {
-                        var tempElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #temp"));
-                        var chanceElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #chance"));
-                        var rainElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #rain"));
-                        var timeElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #time"));
-                        tempElem.textContent = interval.values.temperature.toFixed(dp);
-                        chanceElem.textContent =
-                            interval.values.precipitationProbability.toFixed(dp);
-                        rainElem.textContent = interval.values.precipitationIntensity.toFixed(dp);
-                        timeElem.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-                    });
-                    return [3 /*break*/, 4];
-                case 3:
+                    localStorage.setItem("data", JSON.stringify(data));
+                    localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
+                    return [2 /*return*/, data];
+                case 5:
                     error_1 = _a.sent();
-                    console.error("[WTR] [CRT] [UPD] ", error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    console.error("[WTR] [CRT] [GWD] ", error_1);
+                    return [3 /*break*/, 6];
+                case 6: return [3 /*break*/, 8];
+                case 7:
+                    console.log("[WTR] [DTA] It hasn't been a minute since the last fetch. Using cached data.");
+                    data = JSON.parse(localStorage.getItem("data"));
+                    return [2 /*return*/, data];
+                case 8: return [2 /*return*/];
+            }
+        });
+    });
+}
+function updateWeatherDisplay() {
+    return __awaiter(this, void 0, void 0, function () {
+        var error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, getWeatherData(true).then(function (data) {
+                            var hourlyWeatherData = data.data.timelines[1].intervals[0].values;
+                            var dailyWeatherData = data.data.timelines[0].intervals[0].values;
+                            var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
+                            console.log("[WTR] [LOG] Updating current information");
+                            document.getElementById("location").textContent =
+                                "North Sydney"; // Replace with actual location data if needed
+                            document.getElementById("temp").textContent =
+                                realtimeWeatherData.temperature.toFixed(dp);
+                            document.getElementById("feelsLikeTemp").textContent =
+                                realtimeWeatherData.temperatureApparent.toFixed(dp);
+                            document.getElementById("highTemp").textContent =
+                                dailyWeatherData.temperatureMax.toFixed(dp);
+                            document.getElementById("lowTemp").textContent =
+                                dailyWeatherData.temperatureMin.toFixed(dp);
+                            console.log("[WTR] [LOG] Updating hourly forecast");
+                            data.data.timelines[1].intervals
+                                .slice(0, 12)
+                                .forEach(function (interval, index) {
+                                var tempElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #temp"));
+                                var chanceElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #chance"));
+                                var rainElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #rain"));
+                                var timeElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #time"));
+                                tempElem.textContent = interval.values.temperature.toFixed(dp);
+                                chanceElem.textContent =
+                                    interval.values.precipitationProbability.toFixed(dp);
+                                rainElem.textContent =
+                                    interval.values.precipitationIntensity.toFixed(dp);
+                                timeElem.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                            });
+                        })];
+                case 1:
+                    _a.sent();
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.error("[WTR] [CRT] [UPD] ", error_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
             }
         });
     });
