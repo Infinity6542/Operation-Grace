@@ -34,7 +34,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-// [WTR] [WLC]
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
     var x = prompt("Please enter your Tomorrow.io API key:");
@@ -110,7 +109,7 @@ function updateWeatherDisplay() {
                             var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
                             console.log("[WTR] [LOG] Updating current information");
                             document.getElementById("location").textContent =
-                                "North Sydney"; // Replace with actual location data if needed
+                                String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
                             document.getElementById("temp").textContent =
                                 realtimeWeatherData.temperature.toFixed(dp);
                             document.getElementById("feelsLikeTemp").textContent =
@@ -119,6 +118,7 @@ function updateWeatherDisplay() {
                                 dailyWeatherData.temperatureMax.toFixed(dp);
                             document.getElementById("lowTemp").textContent =
                                 dailyWeatherData.temperatureMin.toFixed(dp);
+                            console.log("[WTR] [LOG] Realtime information updated");
                             console.log("[WTR] [LOG] Updating hourly forecast");
                             data.data.timelines[1].intervals
                                 .slice(0, 12)

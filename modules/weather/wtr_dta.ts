@@ -1,4 +1,3 @@
-// [WTR] [WLC]
 if (
 	localStorage.getItem("location") === null ||
 	localStorage.getItem("key") === null
@@ -66,7 +65,7 @@ async function updateWeatherDisplay() {
 			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
 			console.log("[WTR] [LOG] Updating current information");
 			(document.getElementById("location") as HTMLElement).textContent =
-				"North Sydney"; // Replace with actual location data if needed
+				String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
 			(document.getElementById("temp") as HTMLElement).textContent =
 				realtimeWeatherData.temperature.toFixed(dp);
 			(document.getElementById("feelsLikeTemp") as HTMLElement).textContent =
@@ -75,6 +74,7 @@ async function updateWeatherDisplay() {
 				dailyWeatherData.temperatureMax.toFixed(dp);
 			(document.getElementById("lowTemp") as HTMLElement).textContent =
 				dailyWeatherData.temperatureMin.toFixed(dp);
+				console.log("[WTR] [LOG] Realtime information updated");
 			console.log("[WTR] [LOG] Updating hourly forecast");
 			data.data.timelines[1].intervals
 				.slice(0, 12)
