@@ -60,7 +60,7 @@ function getWeatherData(x) {
                     return [2 /*return*/, data];
                 case 1:
                     if (!(x == false || x === null)) return [3 /*break*/, 8];
-                    if (!((_t - parseInt(_tslu)) >= _frequency || _t == null)) return [3 /*break*/, 7];
+                    if (!(_t - parseInt(_tslu) >= _frequency || _t == null)) return [3 /*break*/, 7];
                     _a.label = 2;
                 case 2:
                     _a.trys.push([2, 5, , 6]);
@@ -107,7 +107,7 @@ function updateWeatherDisplay() {
                             var hourlyWeatherData = data.data.timelines[1].intervals[0].values;
                             var dailyWeatherData = data.data.timelines[0].intervals[0].values;
                             var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
-                            console.log("[WTR] [LOG] Updating current information");
+                            console.log("[WTR] [LOG] Updating realtime information");
                             document.getElementById("location").textContent =
                                 String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
                             document.getElementById("temp").textContent =
@@ -134,6 +134,7 @@ function updateWeatherDisplay() {
                                     interval.values.precipitationIntensity.toFixed(dp);
                                 timeElem.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
                             });
+                            console.log("[WTR] [LOG] Hourly forecast updated");
                         })];
                 case 1:
                     _a.sent();

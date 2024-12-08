@@ -27,7 +27,7 @@ async function getWeatherData(x?: boolean) {
 		return data;
 	} else {
 		if (x == false || x === null) {
-			if ((_t - parseInt(_tslu)) >= _frequency || _t == null) {
+			if (_t - parseInt(_tslu) >= _frequency || _t == null) {
 				// If it has been longer than a minute since the last update
 				try {
 					console.log("[WTR] [DTA] Fetching new data");
@@ -63,7 +63,7 @@ async function updateWeatherDisplay() {
 			const hourlyWeatherData = data.data.timelines[1].intervals[0].values;
 			const dailyWeatherData = data.data.timelines[0].intervals[0].values;
 			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
-			console.log("[WTR] [LOG] Updating current information");
+			console.log("[WTR] [LOG] Updating realtime information");
 			(document.getElementById("location") as HTMLElement).textContent =
 				String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
 			(document.getElementById("temp") as HTMLElement).textContent =
@@ -74,7 +74,7 @@ async function updateWeatherDisplay() {
 				dailyWeatherData.temperatureMax.toFixed(dp);
 			(document.getElementById("lowTemp") as HTMLElement).textContent =
 				dailyWeatherData.temperatureMin.toFixed(dp);
-				console.log("[WTR] [LOG] Realtime information updated");
+			console.log("[WTR] [LOG] Realtime information updated");
 			console.log("[WTR] [LOG] Updating hourly forecast");
 			data.data.timelines[1].intervals
 				.slice(0, 12)
@@ -100,6 +100,7 @@ async function updateWeatherDisplay() {
 						interval.startTime
 					).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 				});
+			console.log("[WTR] [LOG] Hourly forecast updated");
 		});
 	} catch (error) {
 		console.error("[WTR] [CRT] [UPD] ", error);
