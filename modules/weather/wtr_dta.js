@@ -59,7 +59,6 @@ function getWeatherData(x) {
                     data = JSON.parse(localStorage.getItem("data"));
                     return [2 /*return*/, data];
                 case 1:
-                    if (!(x == false || x === null)) return [3 /*break*/, 8];
                     if (!(_t - parseInt(_tslu) >= _frequency || _t == null)) return [3 /*break*/, 7];
                     _a.label = 2;
                 case 2:
@@ -103,7 +102,7 @@ function updateWeatherDisplay() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, getWeatherData(true).then(function (data) {
+                    return [4 /*yield*/, getWeatherData().then(function (data) {
                             var hourlyWeatherData = data.data.timelines[1].intervals[0].values;
                             var dailyWeatherData = data.data.timelines[0].intervals[0].values;
                             var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
@@ -141,7 +140,7 @@ function updateWeatherDisplay() {
                     return [3 /*break*/, 3];
                 case 2:
                     error_2 = _a.sent();
-                    console.error("[WTR] [CRT] [UPD] ", error_2);
+                    console.error("[WTR] [CRT] [UPD]", error_2);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }

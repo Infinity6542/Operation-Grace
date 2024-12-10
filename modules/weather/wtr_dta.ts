@@ -26,40 +26,38 @@ async function getWeatherData(x?: boolean) {
 		let data = JSON.parse(localStorage.getItem("data"));
 		return data;
 	} else {
-		if (x == false || x === null) {
-			if (_t - parseInt(_tslu) >= _frequency || _t == null) {
-				// If it has been longer than a minute since the last update
-				try {
-					console.log("[WTR] [DTA] Fetching new data");
-					const response = await fetch(api);
-					if (!response.ok) {
-						throw new Error("[WTR] [DTA] Failed to fetch weather data");
-					} else {
-						console.log("[WTR] [DTA] Request sent");
-					}
-					const data = await response.json();
-					console.log("[WTR] [DTA] Data fetched");
-					console.log(data);
-					localStorage.setItem("data", JSON.stringify(data));
-					localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
-					return data;
-				} catch (error) {
-					console.error("[WTR] [CRT] [GWD] ", error);
+		if (_t - parseInt(_tslu) >= _frequency || _t == null) {
+			// If it has been longer than a minute since the last update
+			try {
+				console.log("[WTR] [DTA] Fetching new data");
+				const response = await fetch(api);
+				if (!response.ok) {
+					throw new Error("[WTR] [DTA] Failed to fetch weather data");
+				} else {
+					console.log("[WTR] [DTA] Request sent");
 				}
-			} else {
-				console.log(
-					"[WTR] [DTA] It hasn't been a minute since the last fetch. Using cached data."
-				);
-				let data = JSON.parse(localStorage.getItem("data"));
+				const data = await response.json();
+				console.log("[WTR] [DTA] Data fetched");
+				console.log(data);
+				localStorage.setItem("data", JSON.stringify(data));
+				localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
 				return data;
+			} catch (error) {
+				console.error("[WTR] [CRT] [GWD] ", error);
 			}
+		} else {
+			console.log(
+				"[WTR] [DTA] It hasn't been a minute since the last fetch. Using cached data."
+			);
+			let data = JSON.parse(localStorage.getItem("data"));
+			return data;
 		}
 	}
 }
 
 async function updateWeatherDisplay() {
 	try {
-		await getWeatherData(true).then((data) => {
+		await getWeatherData().then((data) => {
 			const hourlyWeatherData = data.data.timelines[1].intervals[0].values;
 			const dailyWeatherData = data.data.timelines[0].intervals[0].values;
 			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
@@ -103,7 +101,7 @@ async function updateWeatherDisplay() {
 			console.log("[WTR] [LOG] Hourly forecast updated");
 		});
 	} catch (error) {
-		console.error("[WTR] [CRT] [UPD] ", error);
+		console.error("[WTR] [CRT] [UPD]", error);
 	}
 }
 
