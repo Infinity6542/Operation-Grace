@@ -77,24 +77,24 @@ async function updateWeatherDisplay() {
 			data.data.timelines[1].intervals
 				.slice(0, 12)
 				.forEach((interval, index) => {
-					const tempElem = document.querySelector(
+					const tempEl = document.querySelector(
 						`[data-time="${index + 1}"] #temp`
 					) as HTMLElement;
-					const chanceElem = document.querySelector(
+					const chanceEl = document.querySelector(
 						`[data-time="${index + 1}"] #chance`
 					) as HTMLElement;
-					const rainElem = document.querySelector(
+					const rainEl = document.querySelector(
 						`[data-time="${index + 1}"] #rain`
 					) as HTMLElement;
-					const timeElem = document.querySelector(
+					const timeEl = document.querySelector(
 						`[data-time="${index + 1}"] #time`
 					) as HTMLElement;
-					tempElem.textContent = interval.values.temperature.toFixed(dp);
-					chanceElem.textContent =
+					tempEl.textContent = interval.values.temperature.toFixed(dp);
+					chanceEl.textContent =
 						interval.values.precipitationProbability.toFixed(dp);
-					rainElem.textContent =
+					rainEl.textContent =
 						interval.values.precipitationIntensity.toFixed(dp);
-					timeElem.textContent = new Date(
+					timeEl.textContent = new Date(
 						interval.startTime
 					).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 				});
