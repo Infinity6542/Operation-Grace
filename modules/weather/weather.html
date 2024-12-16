@@ -4,19 +4,18 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Weather</title>
+		<script>
+			var exports = {};
+		</script>
 		<script type="module" src="https://unpkg.com/lucide@latest" defer></script>
 		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
-			integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-      type="module"
-      defer
+			src="https://unpkg.com/chart.js@4.2.0/dist/chart.umd.js"
+			type="module"
 		></script>
 		<script type="module" src="./main.js" defer></script>
 		<!-- <script type="module" src="./wtr_ana.js"></script> -->
 		<script type="module" src="./wtr_dta.js"></script>
-    <script type="module" src="./graph.js"></script>
+		<script type="module" src="./graph.js"></script>
 		<!-- <script type="module" src="./wtr_proc.js"></script> -->
 		<script type="module" src="./ico.js"></script>
 		<link rel="stylesheet" href="/core/lib/main.css" />
@@ -59,7 +58,7 @@
 				<!-- Temperature card -->
 				<div class="card">
 					<div class="graph">
-						<div style="width: 800px"><canvas id="acquisitions"></canvas></div>
+						<div style="width: 800px"><canvas id="tempGraph"></canvas></div>
 						<!-- <script type="module" src="./wtr_proc.js"></script> -->
 					</div>
 					<div class="flexContainer hori tempTimeline">

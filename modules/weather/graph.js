@@ -1,5 +1,5 @@
-const e = document.getElementById("acquisitions");
+export function e(d) {
+	const e = document.getElementById("tempGraph");
 
-new Chart(e, {
-
-});
+	new Chart(e, {});
+}

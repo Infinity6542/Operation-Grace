@@ -1,3 +1,5 @@
+import updateTempGraph from "./graph.js";
+
 if (
 	localStorage.getItem("location") === null ||
 	localStorage.getItem("key") === null
@@ -58,7 +60,7 @@ async function getWeatherData(x?: boolean) {
 async function updateWeatherDisplay() {
 	try {
 		await getWeatherData().then((data) => {
-			const hourlyWeatherData = data.data.timelines[1].intervals[0].values;
+			const hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
 			const dailyWeatherData = data.data.timelines[0].intervals[0].values;
 			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
 			console.log("[WTR] [LOG] Updating realtime information");
@@ -74,9 +76,7 @@ async function updateWeatherDisplay() {
 				dailyWeatherData.temperatureMin.toFixed(dp);
 			console.log("[WTR] [LOG] Realtime information updated");
 			console.log("[WTR] [LOG] Updating hourly forecast");
-			data.data.timelines[1].intervals
-				.slice(0, 12)
-				.forEach((interval, index) => {
+			hourlyWeatherData.forEach((interval, index) => {
 					const tempEl = document.querySelector(
 						`[data-time="${index + 1}"] #temp`
 					) as HTMLElement;
@@ -94,11 +94,14 @@ async function updateWeatherDisplay() {
 						interval.values.precipitationProbability.toFixed(dp);
 					rainEl.textContent =
 						interval.values.precipitationIntensity.toFixed(dp);
-					timeEl.textContent = new Date(
-						interval.startTime
-					).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+					timeEl.textContent = new Date(interval.startTime).toLocaleTimeString(
+						[],
+						{ hour: "2-digit", minute: "2-digit" }
+					);
 				});
 			console.log("[WTR] [LOG] Hourly forecast updated");
+			console.log(hourlyWeatherData)
+			return hourlyWeatherData;
 		});
 	} catch (error) {
 		console.error("[WTR] [CRT] [UPD]", error);
@@ -107,3 +110,5 @@ async function updateWeatherDisplay() {
 
 // Call the function to update the display on load
 updateWeatherDisplay();
+// export default updateWeatherDisplay();
+

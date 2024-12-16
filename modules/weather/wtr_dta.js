@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,6 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+var status = 0;
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
     var x = prompt("Please enter your Tomorrow.io API key:");
@@ -103,7 +106,7 @@ function updateWeatherDisplay() {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
                     return [4 /*yield*/, getWeatherData().then(function (data) {
-                            var hourlyWeatherData = data.data.timelines[1].intervals[0].values;
+                            var hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
                             var dailyWeatherData = data.data.timelines[0].intervals[0].values;
                             var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
                             console.log("[WTR] [LOG] Updating realtime information");
@@ -119,21 +122,21 @@ function updateWeatherDisplay() {
                                 dailyWeatherData.temperatureMin.toFixed(dp);
                             console.log("[WTR] [LOG] Realtime information updated");
                             console.log("[WTR] [LOG] Updating hourly forecast");
-                            data.data.timelines[1].intervals
-                                .slice(0, 12)
-                                .forEach(function (interval, index) {
-                                var tempElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #temp"));
-                                var chanceElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #chance"));
-                                var rainElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #rain"));
-                                var timeElem = document.querySelector("[data-time=\"".concat(index + 1, "\"] #time"));
-                                tempElem.textContent = interval.values.temperature.toFixed(dp);
-                                chanceElem.textContent =
+                            hourlyWeatherData.forEach(function (interval, index) {
+                                var tempEl = document.querySelector("[data-time=\"".concat(index + 1, "\"] #temp"));
+                                var chanceEl = document.querySelector("[data-time=\"".concat(index + 1, "\"] #chance"));
+                                var rainEl = document.querySelector("[data-time=\"".concat(index + 1, "\"] #rain"));
+                                var timeEl = document.querySelector("[data-time=\"".concat(index + 1, "\"] #time"));
+                                tempEl.textContent = interval.values.temperature.toFixed(dp);
+                                chanceEl.textContent =
                                     interval.values.precipitationProbability.toFixed(dp);
-                                rainElem.textContent =
-                                    interval.values.precipitationIntensity.toFixed(dp);
-                                timeElem.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                                rainEl.textContent = interval.values.precipitationIntensity.toFixed(dp);
+                                timeEl.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
                             });
                             console.log("[WTR] [LOG] Hourly forecast updated");
+                            console.log(hourlyWeatherData);
+                            return hourlyWeatherData;
+                            status = 0;
                         })];
                 case 1:
                     _a.sent();
@@ -141,6 +144,7 @@ function updateWeatherDisplay() {
                 case 2:
                     error_2 = _a.sent();
                     console.error("[WTR] [CRT] [UPD]", error_2);
+                    status = -1;
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
@@ -149,3 +153,5 @@ function updateWeatherDisplay() {
 }
 // Call the function to update the display on load
 updateWeatherDisplay();
+// export default updateWeatherDisplay();
+exports.default = status;
