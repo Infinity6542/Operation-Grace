@@ -49,7 +49,7 @@ async function getWeatherData(x?: boolean) {
 			}
 		} else {
 			console.log(
-				"[WTR] [DTA] It hasn't been a minute since the last fetch. Using cached data."
+				`[WTR] [DTA] It hasn't been ${_frequency}ms since the last fetch. Using cached data.`
 			);
 			let data = JSON.parse(localStorage.getItem("data"));
 			return data;
