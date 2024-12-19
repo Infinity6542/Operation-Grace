@@ -1,3 +1,4 @@
-var src, type, startTime, endTime;
-var timesteps, fields;
+let src, type, startTime, endTime;
+let timesteps, fields;
 // function throwErr() {}
+//# sourceMappingURL=main.js.map
