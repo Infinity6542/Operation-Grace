@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var status = 0;
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
     var x = prompt("Please enter your Tomorrow.io API key:");
@@ -90,7 +89,7 @@ function getWeatherData(x) {
                     return [3 /*break*/, 6];
                 case 6: return [3 /*break*/, 8];
                 case 7:
-                    console.log("[WTR] [DTA] It hasn't been a minute since the last fetch. Using cached data.");
+                    console.log("[WTR] [DTA] It hasn't been ".concat(_frequency, "ms since the last fetch. Using cached data."));
                     data = JSON.parse(localStorage.getItem("data"));
                     return [2 /*return*/, data];
                 case 8: return [2 /*return*/];
@@ -130,13 +129,13 @@ function updateWeatherDisplay() {
                                 tempEl.textContent = interval.values.temperature.toFixed(dp);
                                 chanceEl.textContent =
                                     interval.values.precipitationProbability.toFixed(dp);
-                                rainEl.textContent = interval.values.precipitationIntensity.toFixed(dp);
+                                rainEl.textContent =
+                                    interval.values.precipitationIntensity.toFixed(dp);
                                 timeEl.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
                             });
                             console.log("[WTR] [LOG] Hourly forecast updated");
                             console.log(hourlyWeatherData);
                             return hourlyWeatherData;
-                            status = 0;
                         })];
                 case 1:
                     _a.sent();
@@ -144,7 +143,6 @@ function updateWeatherDisplay() {
                 case 2:
                     error_2 = _a.sent();
                     console.error("[WTR] [CRT] [UPD]", error_2);
-                    status = -1;
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
@@ -154,4 +152,3 @@ function updateWeatherDisplay() {
 // Call the function to update the display on load
 updateWeatherDisplay();
 // export default updateWeatherDisplay();
-exports.default = status;
