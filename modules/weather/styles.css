@@ -1,27 +1,94 @@
 /** General */
+:root {
+	--marginSize: 3vh;
+}
+
 .flexContainer {
-    display: flex;;
+	display: flex;
 }
 
 .hori {
-    flex-direction: row;
+	flex-direction: row;
 }
 
 .vert {
-    flex-direction: column;
+	flex-direction: column;
+}
+
+.centreContent {
+	justify-content: center;
+	align-items: center;
+}
+
+body,
+html {
+	font-family: Satoshi-Variable;
+}
+
+/* Dividers */
+.dividerHori {
+	height: calc(var(--marginSize) / 2);
+	width: 100%;
+}
+
+.dividerVert {
+	height: 100%;
+	width: calc(var(--marginSize) / 2);
+}
+
+/** Main Content */
+.parentCont {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: calc(100% - 2 * var(--marginSize));
+	width: calc(100% - 2 * var(--marginSize));
+	margin: var(--marginSize) var(--marginSize);
+}
+
+/* Main layout */
+.top {
+	flex: 5;
+}
+
+.bottom {
+	flex: 4;
 }
 
 /** Top half */
 .top {
+}
 
+.daySum {
+	flex: 4;
+}
+
+.top > div:has(:not(.daySum)) {
+	flex: 5;
+}
+
+.top > div:has(:not(.daySum)) .card {
+    flex: 1;
+}
+
+/** Day temp card */
+.graph canvas {
+	position: absolute;
+	z-index: -1;
+	mask-image: linear-gradient(
+		rgba(255, 255, 255, 1) 50%,
+		rgba(255, 255, 255, 0) 85%
+	);
 }
 
 /** Cards */
 
 .tempTimeline {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
 }
 
 /* .tempTimeline > * {
@@ -29,8 +96,17 @@
 } */
 
 .circle {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: #000000;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background-color: #000000;
+}
+
+.flexContainer {
+	outline: red solid 1px;
+}
+
+.flexContainer p:has(#temp) {
+	display: flex;
+	justify-content: center;
 }

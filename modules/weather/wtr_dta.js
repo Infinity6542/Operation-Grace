@@ -79,7 +79,6 @@ function getWeatherData(x) {
                 case 4:
                     data = _a.sent();
                     console.log("[WTR] [DTA] Data fetched");
-                    console.log(data);
                     localStorage.setItem("data", JSON.stringify(data));
                     localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
                     return [2 /*return*/, data];
@@ -129,13 +128,11 @@ function updateWeatherDisplay() {
                                 tempEl.textContent = interval.values.temperature.toFixed(dp);
                                 chanceEl.textContent =
                                     interval.values.precipitationProbability.toFixed(dp);
-                                rainEl.textContent =
-                                    interval.values.precipitationIntensity.toFixed(dp);
+                                rainEl.textContent = interval.values.precipitationIntensity.toFixed(dp);
                                 timeEl.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
                             });
                             console.log("[WTR] [LOG] Hourly forecast updated");
-                            console.log(hourlyWeatherData);
-                            return hourlyWeatherData;
+                            // console.log(hourlyWeatherData);
                         })];
                 case 1:
                     _a.sent();
@@ -151,4 +148,3 @@ function updateWeatherDisplay() {
 }
 // Call the function to update the display on load
 updateWeatherDisplay();
-// export default updateWeatherDisplay();

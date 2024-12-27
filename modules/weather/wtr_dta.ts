@@ -40,7 +40,6 @@ async function getWeatherData(x?: boolean) {
 				}
 				const data = await response.json();
 				console.log("[WTR] [DTA] Data fetched");
-				console.log(data);
 				localStorage.setItem("data", JSON.stringify(data));
 				localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
 				return data;
@@ -77,38 +76,33 @@ async function updateWeatherDisplay() {
 			console.log("[WTR] [LOG] Realtime information updated");
 			console.log("[WTR] [LOG] Updating hourly forecast");
 			hourlyWeatherData.forEach((interval, index) => {
-					const tempEl = document.querySelector(
-						`[data-time="${index + 1}"] #temp`
-					) as HTMLElement;
-					const chanceEl = document.querySelector(
-						`[data-time="${index + 1}"] #chance`
-					) as HTMLElement;
-					const rainEl = document.querySelector(
-						`[data-time="${index + 1}"] #rain`
-					) as HTMLElement;
-					const timeEl = document.querySelector(
-						`[data-time="${index + 1}"] #time`
-					) as HTMLElement;
-					tempEl.textContent = interval.values.temperature.toFixed(dp);
-					chanceEl.textContent =
-						interval.values.precipitationProbability.toFixed(dp);
-					rainEl.textContent =
-						interval.values.precipitationIntensity.toFixed(dp);
-					timeEl.textContent = new Date(interval.startTime).toLocaleTimeString(
-						[],
-						{ hour: "2-digit", minute: "2-digit" }
-					);
-				});
+				const tempEl = document.querySelector(
+					`[data-time="${index + 1}"] #temp`
+				) as HTMLElement;
+				const chanceEl = document.querySelector(
+					`[data-time="${index + 1}"] #chance`
+				) as HTMLElement;
+				const rainEl = document.querySelector(
+					`[data-time="${index + 1}"] #rain`
+				) as HTMLElement;
+				const timeEl = document.querySelector(
+					`[data-time="${index + 1}"] #time`
+				) as HTMLElement;
+				tempEl.textContent = interval.values.temperature.toFixed(dp);
+				chanceEl.textContent =
+					interval.values.precipitationProbability.toFixed(dp);
+				rainEl.textContent = interval.values.precipitationIntensity.toFixed(dp);
+				timeEl.textContent = new Date(interval.startTime).toLocaleTimeString(
+					[],
+					{ hour: "2-digit", minute: "2-digit" }
+				);
+			});
 			console.log("[WTR] [LOG] Hourly forecast updated");
-			console.log(hourlyWeatherData)
-			return hourlyWeatherData;
+			// console.log(hourlyWeatherData);
 		});
 	} catch (error) {
 		console.error("[WTR] [CRT] [UPD]", error);
 	}
 }
-
 // Call the function to update the display on load
 updateWeatherDisplay();
-// export default updateWeatherDisplay();
-
