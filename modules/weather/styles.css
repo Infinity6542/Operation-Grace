@@ -68,13 +68,18 @@ html {
 }
 
 .top > div:has(:not(.daySum)) .card {
-    flex: 1;
+	flex: 1;
 }
 
 /** Day temp card */
 .graph canvas {
 	position: absolute;
 	z-index: -1;
+	/* For old Chromium support */
+	-webkit-mask-image: linear-gradient(
+		rgba(255, 255, 255, 1) 50%,
+		rgba(255, 255, 255, 0) 85%
+	);
 	mask-image: linear-gradient(
 		rgba(255, 255, 255, 1) 50%,
 		rgba(255, 255, 255, 0) 85%
