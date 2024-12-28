@@ -129,8 +129,15 @@ function updateWeatherDisplay() {
                                 chanceEl.textContent =
                                     interval.values.precipitationProbability.toFixed(dp);
                                 rainEl.textContent = interval.values.precipitationIntensity.toFixed(dp);
-                                timeEl.textContent = new Date(interval.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                                timeEl.textContent = new Date(interval.startTime)
+                                    .toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: false,
+                                })
+                                    .replace(":", "");
                             });
+                            document.querySelector("#time").innerHTML = "Now";
                             console.log("[WTR] [LOG] Hourly forecast updated");
                             // console.log(hourlyWeatherData);
                         })];
