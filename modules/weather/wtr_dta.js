@@ -60,7 +60,7 @@ function getWeatherData(x) {
             return data;
         }
         else {
-            if (_t - parseInt(_tslu) >= _frequency || _t == null) {
+            if (_t - parseInt(_tslu) >= _frequency || _tslu == null) {
                 // If it has been longer than a minute since the last update
                 try {
                     console.log("[WTR] [DTA] Fetching new data");

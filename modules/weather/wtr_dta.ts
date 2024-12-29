@@ -53,7 +53,7 @@ async function getWeatherData(x?: boolean) {
 		let data = JSON.parse(localStorage.getItem("data"));
 		return data;
 	} else {
-		if (_t - parseInt(_tslu) >= _frequency || _t == null) {
+		if (_t - parseInt(_tslu) >= _frequency || _tslu == null) {
 			// If it has been longer than a minute since the last update
 			try {
 				console.log("[WTR] [DTA] Fetching new data");
@@ -73,13 +73,13 @@ async function getWeatherData(x?: boolean) {
 			}
 		} else {
 			console.log(
+
 				`[WTR] [DTA] It hasn't been ${_frequency}ms since the last fetch. Using cached data.`
 			);
 			let data = JSON.parse(localStorage.getItem("data"));
 			return data;
 		}
-	}
-}
+	}}
 
 async function updateWeatherDisplay() {
 	try {
