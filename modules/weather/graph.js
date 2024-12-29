@@ -2,13 +2,23 @@ let data = JSON.parse(
 	localStorage.getItem("data")
 ).data.timelines[1].intervals.slice(0, 12);
 let graphData = [];
+let ttlTemp = 0;
+let avgTemp;
 async function parseData() {
-	for (let i = 0; i < 12; i++) {
-		let d = new Date(data[i].startTime);
-		// let x = d.getHours() + d.getMinutes();
-		let x = i;
-		let y = Math.round(data[i].values.temperature);
-		graphData.push({ time: x, temp: y });
+	try {
+		for (let i = 0; i < 12; i++) {
+			let d = new Date(data[i].startTime);
+			// let x = d.getHours() + d.getMinutes();
+			let x = i;
+			let y = Math.round(data[i].values.temperature);
+			ttlTemp += y;
+			graphData.push({ time: x, temp: y });
+		}
+	} catch (e) {
+		console.error("[WTR] [GRA] [ERR]" + e);
+	} finally {
+		avgTemp = ttlTemp / 12;
+		// console.log(avgTemp);
 	}
 }
 
@@ -58,28 +68,31 @@ function e(d) {
 				y: {
 					display: false,
 					suggestedMin: 2,
-					suggestedMax: 35
+					suggestedMax: 35,
 				},
 				x: {
-					display: false
-				}
+					display: false,
+				},
 			},
 			plugins: {
 				legend: {
-					display: false
-				}
+					display: false,
+				},
 			},
 			elements: {
 				point: {
-					radius: 0
-				}
+					radius: 0,
+				},
 			},
-			fill: true
-		}
+			fill: true,
+		},
 	});
 }
 
+// async function updateTempGraph() {
 await parseData().then(() => {
 	e(graphData);
-	console.log(graphData);
 });
+// }
+
+// export default updateTempGraph();

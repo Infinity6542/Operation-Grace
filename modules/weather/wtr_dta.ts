@@ -1,4 +1,29 @@
 import updateTempGraph from "./graph.js";
+const wtrCodeAssociations = {
+	"0": "",
+	"1000": "./resources/ico/main/Day/sunny.png",
+	"1100": "./resources/ico/main/Day/pcloudy.png",
+	"1101": "./resources/ico/main/Day/pcloudy.png",
+	"1102": "./resources/ico/main/Day/mcloudy.png",
+	"1001": "./resources/ico/main/Day/Cloudy.png",
+	"2000": "./resources/ico/main/Day/Foggy.png",
+	"2100": "./resources/ico/main/Day/Foggy.png",
+	"4000": "./resources/ico/main/Day/Lrain.png",
+	"4001": "./resources/ico/main/Day/Rain.png",
+	"4200": "./resources/ico/main/Day/Lrain.png",
+	"4201": "./resources/ico/main/Day/Rain.png",
+	"5000": "./resources/ico/main/Day/Snow.png",
+	"5001": "./resources/ico/main/Other/lsnow.png",
+	"5100": "./resources/ico/main/Other/lsnow.png",
+	"5101": "./resources/ico/main/other/Snow.png",
+	"6001": "./resources/ico/main/other/sleet.png",
+	"6200": "./resources/ico/main/other/sleet.png",
+	"6201": "./resources/ico/main/other/sleet.png",
+	"7000": "./resources/ico/main/Day/hail.png",
+	"7101": "./resources/ico/main/Day/hail.png",
+	"7102": "./resources/ico/main/Day/hail.png",
+	"8000": "./resources/ico/main/Day/TStorm.png",
+};
 
 if (
 	localStorage.getItem("location") === null ||
@@ -13,7 +38,7 @@ if (
 const dp = 0;
 const key = localStorage.getItem("key");
 const target = localStorage.getItem("location");
-const api = `https://api.tomorrow.io/v4/timelines?location=${target}&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${key}`;
+const api = `https://api.tomorrow.io/v4/timelines?location=${target}&fields=weatherCode,temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${key}`;
 
 async function getWeatherData(x?: boolean) {
 	// Call getWeatherData(true) to force using cached data
@@ -63,6 +88,8 @@ async function updateWeatherDisplay() {
 			const dailyWeatherData = data.data.timelines[0].intervals[0].values;
 			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
 			console.log("[WTR] [LOG] Updating realtime information");
+			let wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
+			console.log(wtrCodeIco);
 			(document.getElementById("location") as HTMLElement).textContent =
 				String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
 			(document.getElementById("temp") as HTMLElement).textContent =
@@ -73,6 +100,9 @@ async function updateWeatherDisplay() {
 				dailyWeatherData.temperatureMax.toFixed(dp);
 			(document.getElementById("lowTemp") as HTMLElement).textContent =
 				dailyWeatherData.temperatureMin.toFixed(dp);
+			(
+				document.getElementById("wtrCode") as HTMLElement
+			).innerHTML = `<img src="${wtrCodeIco}"></img>`;
 			console.log("[WTR] [LOG] Realtime information updated");
 			console.log("[WTR] [LOG] Updating hourly forecast");
 			hourlyWeatherData.forEach((interval, index) => {
@@ -110,3 +140,6 @@ async function updateWeatherDisplay() {
 }
 // Call the function to update the display on load
 updateWeatherDisplay();
+// .then(() => {
+// 	updateTempGraph();
+// });

@@ -20,6 +20,10 @@
 	align-items: center;
 }
 
+.centreText {
+	text-align: center;
+}
+
 body,
 html {
 	font-family: Satoshi-Variable;
@@ -47,6 +51,11 @@ html {
 }
 
 /* Main layout */
+.top > div,
+.bottom {
+	border-radius: 30px;
+}
+
 .top {
 	flex: 5;
 }
@@ -55,9 +64,65 @@ html {
 	flex: 4;
 }
 
-/** Top half */
-.top {
+.tl {
+	border-top-left-radius: 60px !important;
 }
+
+.tr {
+	border-top-right-radius: 60px !important;
+}
+
+.bl {
+	border-bottom-left-radius: 60px !important;
+}
+
+.br {
+	border-bottom-right-radius: 60px !important;
+}
+
+/** Cards */
+
+.tempTimeline {
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.tempTimeline > div {
+	flex: 1;
+}
+
+.tempTimeline > div > div {
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.tempTimeline .circle {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.circle {
+	width: 3px !important;
+	height: 3px !important;
+	border-radius: 50%;
+	background-color: #000000;
+}
+
+.flexContainer {
+	outline: red solid 1px;
+}
+
+.flexContainer p:has(#temp) {
+	display: flex;
+	justify-content: center;
+}
+
+/** Top half */
+/* .top {
+} */
 
 .daySum {
 	flex: 4;
@@ -71,10 +136,100 @@ html {
 	flex: 1;
 }
 
-/** Day temp card */
-.graph canvas {
+/* Day summary */
+.daySum > div {
+	height: 90%;
+	width: 75%;
+}
+
+.daySum h1 {
+	margin-top: 0;
+	font-weight: 500;
+	text-align: center;
+}
+
+.daySum > div > div:has(.icn) .icn {
+	height: 240px;
+	width: 231px;
+	outline: 1px solid limegreen;
+}
+
+/* .daySum > div > div:has(#highTemp) {
+	background: red;
+} */
+
+.daySum p:has(#feelsLikeTemp) {
+	margin: 0;
+	margin-bottom: 0.5em;
+	font-size: 1.5em;
+	font-weight: 350;
+}
+
+.daySum p:has(#highTemp, #lowTemp) {
+	margin: 0;
+	font-size: 2em;
+	font-weight: 450;
+}
+
+.daySum .circle {
+	margin: 0 10px 0 10px;
+}
+
+.daySum #temp {
+	color: transparent;
+	background: linear-gradient(#000000 50%, #0000008a 90%);
+	background-clip: text;
+	/* Looks kind of off so disabling until I can properly figure it out */
+	/* text-shadow: 7px 7px 10px white; */
+}
+
+.daySum p:has(#temp) {
+	font-size: 10vw;
+	font-weight: 500;
+}
+
+.daySum img {
+	/* height: 100%; */
+	width: 100%;
+}
+
+.daySum > div > div:has(img) {
+	flex-direction: row;
+	gap: 2vw;
+}
+
+#wtrCode {
+	display: flex;
+	height: 100%;
+	width: 50%;
+	align-items: center;
+}
+
+/** Bottom half */
+/* Card */
+.bottom {
+	border-radius: 30px 30px 60px 60px;
+}
+
+/* Graph */
+.graph {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.graph > div {
 	position: absolute;
-	z-index: -1;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	flex: 1;
+}
+
+.graph canvas {
+	width: 100% !important;
 	/* For old Chromium support */
 	-webkit-mask-image: linear-gradient(
 		rgba(255, 255, 255, 1) 50%,
@@ -86,32 +241,27 @@ html {
 	);
 }
 
-/** Cards */
-
-.tempTimeline {
-	position: absolute;
-	bottom: 0;
-	display: flex;
-	flex-direction: row;
-	gap: 20px;
+/* Text timeline */
+p:has(#temp) {
+	font-size: 3em;
+	margin: 0;
 }
 
-/* .tempTimeline > * {
-
-} */
-
-.circle {
-	width: 5px;
-	height: 5px;
-	border-radius: 50%;
-	background-color: #000000;
+.tempTimeline > div > div:has(svg) {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	transform: translate(0, -30%);
+	width: 110px;
+	zoom: 0.75;
 }
 
-.flexContainer {
-	outline: red solid 1px;
+.tempTimeline > div > div:has(svg) p {
+	/* position: relative; */
+	margin-top: 0;
+	margin-bottom: auto;
 }
 
-.flexContainer p:has(#temp) {
-	display: flex;
-	justify-content: center;
+#time {
+	margin: 0;
 }

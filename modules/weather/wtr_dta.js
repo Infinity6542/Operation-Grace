@@ -36,6 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var wtrCodeAssociations = {
+    "0": "",
+    "1000": "./resources/ico/main/Day/sunny.png",
+    "1100": "./resources/ico/main/Day/pcloudy.png",
+    "1101": "./resources/ico/main/Day/pcloudy.png",
+    "1102": "./resources/ico/main/Day/mcloudy.png",
+    "1001": "./resources/ico/main/Day/Cloudy.png",
+    "2000": "./resources/ico/main/Day/Foggy.png",
+    "2100": "./resources/ico/main/Day/Foggy.png",
+    "4000": "./resources/ico/main/Day/Lrain.png",
+    "4001": "./resources/ico/main/Day/Rain.png",
+    "4200": "./resources/ico/main/Day/Lrain.png",
+    "4201": "./resources/ico/main/Day/Rain.png",
+    "5000": "./resources/ico/main/Day/Snow.png",
+    "5001": "./resources/ico/main/Other/lsnow.png",
+    "5100": "./resources/ico/main/Other/lsnow.png",
+    "5101": "./resources/ico/main/other/Snow.png",
+    "6001": "./resources/ico/main/other/sleet.png",
+    "6200": "./resources/ico/main/other/sleet.png",
+    "6201": "./resources/ico/main/other/sleet.png",
+    "7000": "./resources/ico/main/Day/hail.png",
+    "7101": "./resources/ico/main/Day/hail.png",
+    "7102": "./resources/ico/main/Day/hail.png",
+    "8000": "./resources/ico/main/Day/TStorm.png",
+};
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
     var x = prompt("Please enter your Tomorrow.io API key:");
@@ -46,7 +71,7 @@ if (localStorage.getItem("location") === null ||
 var dp = 0;
 var key = localStorage.getItem("key");
 var target = localStorage.getItem("location");
-var api = "https://api.tomorrow.io/v4/timelines?location=".concat(target, "&fields=temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(key);
+var api = "https://api.tomorrow.io/v4/timelines?location=".concat(target, "&fields=weatherCode,temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(key);
 function getWeatherData(x) {
     return __awaiter(this, void 0, void 0, function () {
         var _t, _tslu, _frequency, data, response, data, error_1, data;
@@ -108,6 +133,8 @@ function updateWeatherDisplay() {
                             var dailyWeatherData = data.data.timelines[0].intervals[0].values;
                             var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
                             console.log("[WTR] [LOG] Updating realtime information");
+                            var wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
+                            console.log(wtrCodeIco);
                             document.getElementById("location").textContent =
                                 String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
                             document.getElementById("temp").textContent =
@@ -118,6 +145,7 @@ function updateWeatherDisplay() {
                                 dailyWeatherData.temperatureMax.toFixed(dp);
                             document.getElementById("lowTemp").textContent =
                                 dailyWeatherData.temperatureMin.toFixed(dp);
+                            document.getElementById("wtrCode").innerHTML = "<img src=\"".concat(wtrCodeIco, "\"></img>");
                             console.log("[WTR] [LOG] Realtime information updated");
                             console.log("[WTR] [LOG] Updating hourly forecast");
                             hourlyWeatherData.forEach(function (interval, index) {
@@ -155,3 +183,6 @@ function updateWeatherDisplay() {
 }
 // Call the function to update the display on load
 updateWeatherDisplay();
+// .then(() => {
+// 	updateTempGraph();
+// });

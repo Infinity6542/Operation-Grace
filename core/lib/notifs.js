@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 //TODO: Make the notification system
 class notif {
     constructor(title, msg, icn) {

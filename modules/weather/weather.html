@@ -36,28 +36,28 @@
 				<!-- Top part -->
 				<div class="flexContainer hori top">
 					<!-- Day summary card-->
-					<div class="card daySum flexContainer centreContent">
-						<div class="flexContainer vert">
+					<div class="card daySum flexContainer centreContent tl">
+						<div class="flexContainer vert centreContent">
 							<h1>Weather in <span id="location"></span></h1>
-							<div class="flexContainer hori">
-								<div class="icn"></div>
+							<div class="flexContainer hori centreContent">
+								<div class="icn" id="wtrCode"></div>
 								<div class="flexContainer hori">
 									<p><span id="temp"></span>&deg;</p>
 								</div>
-								<div class="flexContainer vert">
-									<p>Feels like <span id="feelsLikeTemp"></span>&deg;</p>
-									<div class="flexContainer hori">
-										<p>High <span id="highTemp"></span>&deg;</p>
-										<div class="circle"></div>
-										<p>Low <span id="lowTemp"></span>&deg;</p>
-									</div>
+							</div>
+							<div class="flexContainer vert centreText">
+								<p>Feels like <span id="feelsLikeTemp"></span>&deg;</p>
+								<div class="flexContainer hori centreContent">
+									<p>High <span id="highTemp"></span>&deg;</p>
+									<div class="circle"></div>
+									<p>Low <span id="lowTemp"></span>&deg;</p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="dividerVert flexContainer"></div>
 					<!-- Other details group-->
-					<div class="flexContainer vert">
+					<div class="flexContainer vert tr">
 						<!-- Another card -->
 						<div class="card">Some content 1</div>
 						<!-- Divider between the two cards -->
@@ -68,7 +68,7 @@
 				</div>
 				<div class="dividerHori flexContainer"></div>
 				<!-- Temperature card -->
-				<div class="card bottom">
+				<div class="card bottom bl br">
 					<div class="graph">
 						<div><canvas id="tempGraph"></canvas></div>
 						<!-- <script type="module" src="./wtr_proc.js"></script> -->
@@ -82,7 +82,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time">Now</p>
+							<p id="time" class="centreText">Now</p>
 						</div>
 						<div class="flexContainer vert" data-time="2">
 							<p><span id="temp"></span>&deg;</p>
@@ -92,7 +92,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="3">
 							<p><span id="temp"></span>&deg;</p>
@@ -102,7 +102,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="4">
 							<p><span id="temp"></span>&deg;</p>
@@ -112,7 +112,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="5">
 							<p><span id="temp"></span>&deg;</p>
@@ -122,7 +122,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="6">
 							<p><span id="temp"></span>&deg;</p>
@@ -132,7 +132,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="7">
 							<p><span id="temp"></span>&deg;</p>
@@ -142,7 +142,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="8">
 							<p><span id="temp"></span>&deg;</p>
@@ -152,7 +152,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="9">
 							<p><span id="temp"></span>&deg;</p>
@@ -162,7 +162,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="10">
 							<p><span id="temp"></span>&deg;</p>
@@ -172,7 +172,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="11">
 							<p><span id="temp"></span>&deg;</p>
@@ -182,7 +182,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 						<div class="flexContainer vert" data-time="12">
 							<p><span id="temp"></span>&deg;</p>
@@ -192,7 +192,7 @@
 								<div class="circle"></div>
 								<p><span id="rain"></span>mm</p>
 							</div>
-							<p id="time"></p>
+							<p id="time" class="centreText"></p>
 						</div>
 					</div>
 				</div>

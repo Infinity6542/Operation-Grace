@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
         "target": "ES6",
-        "module": "CommonJS",
+        "module": "NodeNext",
         "sourceMap": true,
-        "lib": ["ES2015", "DOM"]
+        "moduleResolution": "nodenext",
+        "resolveJsonModule": true,
+        "lib": [
+            "ES2015",
+            "DOM"
+        ]
     }
 }
