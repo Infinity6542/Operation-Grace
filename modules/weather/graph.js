@@ -24,7 +24,20 @@ async function parseData() {
 
 function e(d) {
 	const e = document.getElementById("tempGraph");
-
+	const simplePlugin = {
+		beforeDraw: function (chartInstance) {
+			let _stroke = chartInstance.ctx.stroke;
+			chartInstance.ctx.stroke = function () {
+				chartInstance.ctx.save();
+				chartInstance.ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+				chartInstance.ctx.shadowBlur = 5;
+				chartInstance.ctx.shadowOffsetX = 1;
+				chartInstance.ctx.shadowOffsetY = 1;
+				_stroke.apply(this, arguments);
+				chartInstance.ctx.restore();
+			};
+		},
+	};
 	new Chart(e, {
 		type: "line",
 		data: {
@@ -60,6 +73,7 @@ function e(d) {
 					// borderColor: "rgba(255, 99, 132, 1)",
 					// borderWidth: 1,
 					tension: 0.2,
+					borderWidth: -10,
 				},
 			],
 		},
@@ -85,7 +99,14 @@ function e(d) {
 				},
 			},
 			fill: true,
+			layout: {
+				padding: {
+					left: -90,
+					right: -90,
+				},
+			},
 		},
+		plugins: [simplePlugin],
 	});
 }
 

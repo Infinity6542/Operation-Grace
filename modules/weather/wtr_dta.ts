@@ -85,11 +85,10 @@ async function updateWeatherDisplay() {
 	try {
 		await getWeatherData().then((data) => {
 			const hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
-			const dailyWeatherData = data.data.timelines[0].intervals[0].values;
+			const dailyWeatherData = data.data.timelines[0].intervals.slice(0, 6);
 			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
 			console.log("[WTR] [LOG] Updating realtime information");
 			let wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
-			console.log(wtrCodeIco);
 			(document.getElementById("location") as HTMLElement).textContent =
 				String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
 			(document.getElementById("temp") as HTMLElement).textContent =
@@ -97,32 +96,33 @@ async function updateWeatherDisplay() {
 			(document.getElementById("feelsLikeTemp") as HTMLElement).textContent =
 				realtimeWeatherData.temperatureApparent.toFixed(dp);
 			(document.getElementById("highTemp") as HTMLElement).textContent =
-				dailyWeatherData.temperatureMax.toFixed(dp);
+				realtimeWeatherData.temperatureMax.toFixed(dp);
 			(document.getElementById("lowTemp") as HTMLElement).textContent =
-				dailyWeatherData.temperatureMin.toFixed(dp);
+				realtimeWeatherData.temperatureMin.toFixed(dp);
 			(
 				document.getElementById("wtrCode") as HTMLElement
 			).innerHTML = `<img src="${wtrCodeIco}"></img>`;
 			console.log("[WTR] [LOG] Realtime information updated");
 			console.log("[WTR] [LOG] Updating hourly forecast");
-			hourlyWeatherData.forEach((interval, index) => {
-				const tempEl = document.querySelector(
-					`[data-time="${index + 1}"] #temp`
+			hourlyWeatherData.forEach((_interval, _index) => {
+				const _tempEl = document.querySelector(
+					`[data-time="${_index + 1}"] #temp`
 				) as HTMLElement;
-				const chanceEl = document.querySelector(
-					`[data-time="${index + 1}"] #chance`
+				const _chanceEl = document.querySelector(
+					`[data-time="${_index + 1}"] #chance`
 				) as HTMLElement;
-				const rainEl = document.querySelector(
-					`[data-time="${index + 1}"] #rain`
+				const _rainEl = document.querySelector(
+					`[data-time="${_index + 1}"] #rain`
 				) as HTMLElement;
-				const timeEl = document.querySelector(
-					`[data-time="${index + 1}"] #time`
+				const _timeEl = document.querySelector(
+					`[data-time="${_index + 1}"] #time`
 				) as HTMLElement;
-				tempEl.textContent = interval.values.temperature.toFixed(dp);
-				chanceEl.textContent =
-					interval.values.precipitationProbability.toFixed(dp);
-				rainEl.textContent = interval.values.precipitationIntensity.toFixed(dp);
-				timeEl.textContent = new Date(interval.startTime)
+				_tempEl.textContent = _interval.values.temperature.toFixed(dp);
+				_chanceEl.textContent =
+					_interval.values.precipitationProbability.toFixed(dp);
+				_rainEl.textContent =
+					_interval.values.precipitationIntensity.toFixed(dp);
+				_timeEl.textContent = new Date(_interval.startTime)
 					.toLocaleTimeString([], {
 						hour: "2-digit",
 						minute: "2-digit",
@@ -130,6 +130,26 @@ async function updateWeatherDisplay() {
 					})
 					.replace(":", "");
 			});
+			console.log(dailyWeatherData);
+			console.log(data);
+			dailyWeatherData.forEach((_interval, _index) => {
+				let __index = _index + 1;
+				if (__index == 6) return;
+				let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+				const _day = document.querySelector(
+					`[data-day="${__index}"] #day`
+				) as HTMLElement;
+				const _wtrCo = document.querySelector(
+					`[data-day="${__index}"] #wtrCo`
+				) as HTMLImageElement;
+				const _temp = document.querySelector(
+					`[data-day="${__index}"] #dTemp`
+				) as HTMLElement;
+				_day.textContent = days[new Date(_interval.startTime).getDay() + 1];
+				_wtrCo.src = wtrCodeAssociations[_interval.values.weatherCode];
+				_temp.textContent = _interval.values.temperature.toFixed(dp) + "°";
+			});
+
 			document.querySelector("#time").innerHTML = "Now";
 			console.log("[WTR] [LOG] Hourly forecast updated");
 			// console.log(hourlyWeatherData);
