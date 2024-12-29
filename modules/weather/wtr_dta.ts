@@ -33,6 +33,9 @@ if (
 	let y = prompt("Please enter your location");
 	localStorage.setItem("key", x);
 	localStorage.setItem("location", y);
+	window.alert(
+		"Saved in localstorage. Refresh after data fetch to view the chart."
+	);
 }
 
 const dp = 0;
@@ -73,13 +76,13 @@ async function getWeatherData(x?: boolean) {
 			}
 		} else {
 			console.log(
-
 				`[WTR] [DTA] It hasn't been ${_frequency}ms since the last fetch. Using cached data.`
 			);
 			let data = JSON.parse(localStorage.getItem("data"));
 			return data;
 		}
-	}}
+	}
+}
 
 async function updateWeatherDisplay() {
 	try {

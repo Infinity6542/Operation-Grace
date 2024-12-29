@@ -8,8 +8,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const wtrCodeAssociations = {
+var wtrCodeAssociations = {
     "0": "",
     "1000": "./resources/ico/main/Day/sunny.png",
     "1100": "./resources/ico/main/Day/pcloudy.png",
@@ -36,121 +63,137 @@ const wtrCodeAssociations = {
 };
 if (localStorage.getItem("location") === null ||
     localStorage.getItem("key") === null) {
-    let x = prompt("Please enter your Tomorrow.io API key:");
-    let y = prompt("Please enter your location");
+    var x = prompt("Please enter your Tomorrow.io API key:");
+    var y = prompt("Please enter your location");
     localStorage.setItem("key", x);
     localStorage.setItem("location", y);
+    window.alert("Saved in localstorage. Refresh after data fetch to view the chart.");
 }
-const dp = 0;
-const key = localStorage.getItem("key");
-const target = localStorage.getItem("location");
-const api = `https://api.tomorrow.io/v4/timelines?location=${target}&fields=weatherCode,temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=${key}`;
+var dp = 0;
+var key = localStorage.getItem("key");
+var target = localStorage.getItem("location");
+var api = "https://api.tomorrow.io/v4/timelines?location=".concat(target, "&fields=weatherCode,temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(key);
 function getWeatherData(x) {
-    return __awaiter(this, void 0, void 0, function* () {
-        // Call getWeatherData(true) to force using cached data
-        //
-        // getWeatherData() will automatically fetch new data if
-        // "frequency" seconds have elapsed since the last fetch
-        let _t = Date.now();
-        let _tslu = localStorage.getItem("timeSinceLastUpdate");
-        let _frequency = 60000; // milliseconds
-        if (x == true) {
-            console.log("[WTR] [DTA] Using cached data.");
-            let data = JSON.parse(localStorage.getItem("data"));
-            return data;
-        }
-        else {
-            if (_t - parseInt(_tslu) >= _frequency || _tslu == null) {
-                // If it has been longer than a minute since the last update
-                try {
+    return __awaiter(this, void 0, void 0, function () {
+        var _t, _tslu, _frequency, data, response, data, error_1, data;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _t = Date.now();
+                    _tslu = localStorage.getItem("timeSinceLastUpdate");
+                    _frequency = 60000;
+                    if (!(x == true)) return [3 /*break*/, 1];
+                    console.log("[WTR] [DTA] Using cached data.");
+                    data = JSON.parse(localStorage.getItem("data"));
+                    return [2 /*return*/, data];
+                case 1:
+                    if (!(_t - parseInt(_tslu) >= _frequency || _tslu == null)) return [3 /*break*/, 7];
+                    _a.label = 2;
+                case 2:
+                    _a.trys.push([2, 5, , 6]);
                     console.log("[WTR] [DTA] Fetching new data");
-                    const response = yield fetch(api);
+                    return [4 /*yield*/, fetch(api)];
+                case 3:
+                    response = _a.sent();
                     if (!response.ok) {
                         throw new Error("[WTR] [DTA] Failed to fetch weather data");
                     }
                     else {
                         console.log("[WTR] [DTA] Request sent");
                     }
-                    const data = yield response.json();
+                    return [4 /*yield*/, response.json()];
+                case 4:
+                    data = _a.sent();
                     console.log("[WTR] [DTA] Data fetched");
                     localStorage.setItem("data", JSON.stringify(data));
                     localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
-                    return data;
-                }
-                catch (error) {
-                    console.error("[WTR] [CRT] [GWD] ", error);
-                }
+                    return [2 /*return*/, data];
+                case 5:
+                    error_1 = _a.sent();
+                    console.error("[WTR] [CRT] [GWD] ", error_1);
+                    return [3 /*break*/, 6];
+                case 6: return [3 /*break*/, 8];
+                case 7:
+                    console.log("[WTR] [DTA] It hasn't been ".concat(_frequency, "ms since the last fetch. Using cached data."));
+                    data = JSON.parse(localStorage.getItem("data"));
+                    return [2 /*return*/, data];
+                case 8: return [2 /*return*/];
             }
-            else {
-                console.log(`[WTR] [DTA] It hasn't been ${_frequency}ms since the last fetch. Using cached data.`);
-                let data = JSON.parse(localStorage.getItem("data"));
-                return data;
-            }
-        }
+        });
     });
 }
 function updateWeatherDisplay() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield getWeatherData().then((data) => {
-                const hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
-                const dailyWeatherData = data.data.timelines[0].intervals.slice(0, 6);
-                const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
-                console.log("[WTR] [LOG] Updating realtime information");
-                let wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
-                document.getElementById("location").textContent =
-                    String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
-                document.getElementById("temp").textContent =
-                    realtimeWeatherData.temperature.toFixed(dp);
-                document.getElementById("feelsLikeTemp").textContent =
-                    realtimeWeatherData.temperatureApparent.toFixed(dp);
-                document.getElementById("highTemp").textContent =
-                    realtimeWeatherData.temperatureMax.toFixed(dp);
-                document.getElementById("lowTemp").textContent =
-                    realtimeWeatherData.temperatureMin.toFixed(dp);
-                document.getElementById("wtrCode").innerHTML = `<img src="${wtrCodeIco}"></img>`;
-                console.log("[WTR] [LOG] Realtime information updated");
-                console.log("[WTR] [LOG] Updating hourly forecast");
-                hourlyWeatherData.forEach((_interval, _index) => {
-                    const _tempEl = document.querySelector(`[data-time="${_index + 1}"] #temp`);
-                    const _chanceEl = document.querySelector(`[data-time="${_index + 1}"] #chance`);
-                    const _rainEl = document.querySelector(`[data-time="${_index + 1}"] #rain`);
-                    const _timeEl = document.querySelector(`[data-time="${_index + 1}"] #time`);
-                    _tempEl.textContent = _interval.values.temperature.toFixed(dp);
-                    _chanceEl.textContent =
-                        _interval.values.precipitationProbability.toFixed(dp);
-                    _rainEl.textContent =
-                        _interval.values.precipitationIntensity.toFixed(dp);
-                    _timeEl.textContent = new Date(_interval.startTime)
-                        .toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: false,
-                    })
-                        .replace(":", "");
-                });
-                console.log(dailyWeatherData);
-                console.log(data);
-                dailyWeatherData.forEach((_interval, _index) => {
-                    let __index = _index + 1;
-                    if (__index == 6)
-                        return;
-                    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-                    const _day = document.querySelector(`[data-day="${__index}"] #day`);
-                    const _wtrCo = document.querySelector(`[data-day="${__index}"] #wtrCo`);
-                    const _temp = document.querySelector(`[data-day="${__index}"] #dTemp`);
-                    _day.textContent = days[new Date(_interval.startTime).getDay() + 1];
-                    _wtrCo.src = wtrCodeAssociations[_interval.values.weatherCode];
-                    _temp.textContent = _interval.values.temperature.toFixed(dp) + "°";
-                });
-                document.querySelector("#time").innerHTML = "Now";
-                console.log("[WTR] [LOG] Hourly forecast updated");
-                // console.log(hourlyWeatherData);
-            });
-        }
-        catch (error) {
-            console.error("[WTR] [CRT] [UPD]", error);
-        }
+    return __awaiter(this, void 0, void 0, function () {
+        var error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, getWeatherData().then(function (data) {
+                            var hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
+                            var dailyWeatherData = data.data.timelines[0].intervals.slice(0, 6);
+                            var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
+                            console.log("[WTR] [LOG] Updating realtime information");
+                            var wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
+                            document.getElementById("location").textContent =
+                                String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
+                            document.getElementById("temp").textContent =
+                                realtimeWeatherData.temperature.toFixed(dp);
+                            document.getElementById("feelsLikeTemp").textContent =
+                                realtimeWeatherData.temperatureApparent.toFixed(dp);
+                            document.getElementById("highTemp").textContent =
+                                realtimeWeatherData.temperatureMax.toFixed(dp);
+                            document.getElementById("lowTemp").textContent =
+                                realtimeWeatherData.temperatureMin.toFixed(dp);
+                            document.getElementById("wtrCode").innerHTML = "<img src=\"".concat(wtrCodeIco, "\"></img>");
+                            console.log("[WTR] [LOG] Realtime information updated");
+                            console.log("[WTR] [LOG] Updating hourly forecast");
+                            hourlyWeatherData.forEach(function (_interval, _index) {
+                                var _tempEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #temp"));
+                                var _chanceEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #chance"));
+                                var _rainEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #rain"));
+                                var _timeEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #time"));
+                                _tempEl.textContent = _interval.values.temperature.toFixed(dp);
+                                _chanceEl.textContent =
+                                    _interval.values.precipitationProbability.toFixed(dp);
+                                _rainEl.textContent =
+                                    _interval.values.precipitationIntensity.toFixed(dp);
+                                _timeEl.textContent = new Date(_interval.startTime)
+                                    .toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: false,
+                                })
+                                    .replace(":", "");
+                            });
+                            console.log(dailyWeatherData);
+                            console.log(data);
+                            dailyWeatherData.forEach(function (_interval, _index) {
+                                var __index = _index + 1;
+                                if (__index == 6)
+                                    return;
+                                var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                                var _day = document.querySelector("[data-day=\"".concat(__index, "\"] #day"));
+                                var _wtrCo = document.querySelector("[data-day=\"".concat(__index, "\"] #wtrCo"));
+                                var _temp = document.querySelector("[data-day=\"".concat(__index, "\"] #dTemp"));
+                                _day.textContent = days[new Date(_interval.startTime).getDay() + 1];
+                                _wtrCo.src = wtrCodeAssociations[_interval.values.weatherCode];
+                                _temp.textContent = _interval.values.temperature.toFixed(dp) + "°";
+                            });
+                            document.querySelector("#time").innerHTML = "Now";
+                            console.log("[WTR] [LOG] Hourly forecast updated");
+                            // console.log(hourlyWeatherData);
+                        })];
+                case 1:
+                    _a.sent();
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.error("[WTR] [CRT] [UPD]", error_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
     });
 }
 // Call the function to update the display on load
@@ -158,4 +201,3 @@ updateWeatherDisplay();
 // .then(() => {
 // 	updateTempGraph();
 // });
-//# sourceMappingURL=wtr_dta.js.map
