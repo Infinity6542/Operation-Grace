@@ -1,17 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather</title>
-    <script src="/3pm/luxon.js" defer></script>
-    <script type="module" src="./main.js"></script>
-    <script type="module" src="./weather.js"></script>
-    <script type="module" src="./wtr_ana.js"></script>
-    <script type="module" src="./wtr_data.js"></script>
-    <script type="module" src="./wtr_proc.js"></script>
-  </head>
-  <body>
-
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Weather</title>
+		<script>
+			// You may be asking yourself, why is this here? It seems redundant. And
+			// you'd be correct. But, for whatever reason, the entire program dies
+			// as soon as it's removed. So, it stays.
+			var exports = {};
+		</script>
+		<script type="module" src="https://unpkg.com/lucide@latest" defer></script>
+		<script
+			src="https://unpkg.com/chart.js@4.2.0/dist/chart.umd.js"
+			type="module"
+		></script>
+		<script type="module" src="./main.js" defer></script>
+		<!-- <script type="module" src="./wtr_ana.js"></script> -->
+		<script type="module" src="./wtr_dta.js"></script>
+		<script type="module" src="./graph.js"></script>
+		<!-- <script type="module" src="./wtr_proc.js"></script> -->
+		<script type="module" src="./ico.js"></script>
+		<link rel="stylesheet" href="/core/lib/main.css" />
+		<link rel="stylesheet" href="./styles.css" />
+		<!-- Font -->
+		<link
+			rel="stylesheet"
+			href="/core/lib/fonts/satoshi/Fonts/WEB/css/satoshi.css"
+		/>
+	</head>
+	<body>
+		<div class="bg">
+			<!-- Container for every element-->
+			<div class="flexContainer vert parentCont">
+				<!-- Top part -->
+				<div class="flexContainer hori top">
+					<!-- Day summary card-->
+					<div class="card daySum flexContainer centreContent tl">
+						<div class="flexContainer vert centreContent">
+							<h1>Weather in <span id="location"></span></h1>
+							<div class="flexContainer hori centreContent">
+								<div class="icn" id="wtrCode"></div>
+								<div class="flexContainer hori">
+									<p><span id="temp"></span>&deg;</p>
+								</div>
+							</div>
+							<div class="flexContainer vert centreText">
+								<p>Feels like <span id="feelsLikeTemp"></span>&deg;</p>
+								<div class="flexContainer hori centreContent">
+									<p>High <span id="highTemp"></span>&deg;</p>
+									<div class="circle"></div>
+									<p>Low <span id="lowTemp"></span>&deg;</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="dividerVert flexContainer"></div>
+					<!-- Other details group-->
+					<div class="flexContainer vert tr">
+						<!-- Another card -->
+						<div class="card weekSum centreContent">
+							<div class="container hori">
+								<div class="flexContainer vert centreContent" data-day="1">
+									<p id="day"></p>
+									<img src="" alt="" id="wtrCo" />
+									<p id="dTemp"></p>
+								</div>
+								<div class="flexContainer vert centreContent" data-day="2">
+									<p id="day"></p>
+									<img src="" alt="" id="wtrCo" />
+									<p id="dTemp"></p>
+								</div>
+								<div class="flexContainer vert centreContent" data-day="3">
+									<p id="day"></p>
+									<img src="" alt="" id="wtrCo" />
+									<p id="dTemp"></p>
+								</div>
+								<div class="flexContainer vert centreContent" data-day="4">
+									<p id="day"></p>
+									<img src="" alt="" id="wtrCo" />
+									<p id="dTemp"></p>
+								</div>
+								<div class="flexContainer vert centreContent" data-day="5">
+									<p id="day"></p>
+									<img src="" alt="" id="wtrCo" />
+									<p id="dTemp"></p>
+								</div>
+								<div class="flexContainer vert centreContent" style="opacity: .7;">
+									<p id="day">...</p>
+								</div>
+								<div class="flexContainer vert centreContent" style="opacity: .5;">
+									<p id="day">...</p>
+								</div>
+								<div class="flexContainer vert centreContent" style="opacity: .3;">
+									<p id="day">...</p>
+								</div>
+							</div>
+						</div>
+						<!-- Divider between the two cards -->
+						<div class="dividerHori flexContainer"></div>
+						<!-- Another card -->
+						<div class="card centreContent">
+							<div
+								class="flexContainer vert centreContent"
+								style="height: 100%"
+							>
+								<h2>coming soon</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="dividerHori flexContainer"></div>
+				<!-- Temperature card -->
+				<div class="card bottom bl br">
+					<div class="graph">
+						<div><canvas id="tempGraph"></canvas></div>
+						<!-- <script type="module" src="./wtr_proc.js"></script> -->
+					</div>
+					<div class="flexContainer hori tempTimeline">
+						<div class="flexContainer vert" data-time="1">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText">Now</p>
+						</div>
+						<div class="flexContainer vert" data-time="2">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="3">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="4">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="5">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="6">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="7">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="8">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="9">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="10">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="11">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+						<div class="flexContainer vert" data-time="12">
+							<p><span id="temp"></span>&deg;</p>
+							<div class="flexContainer hori">
+								<i data-lucide="droplet"></i>
+								<p><span id="chance"></span>&percnt;</p>
+								<div class="circle"></div>
+								<p><span id="rain"></span>mm</p>
+							</div>
+							<p id="time" class="centreText"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

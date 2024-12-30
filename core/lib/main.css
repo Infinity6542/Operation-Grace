@@ -14,3 +14,15 @@ iframe {
     height: 100%;
     width: 100%;
 }
+
+.flexContainer {
+    display: flex;;
+}
+
+.hori {
+    flex-direction: row;
+}
+
+.vert {
+    flex-direction: column;
+}
