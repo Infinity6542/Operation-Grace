@@ -1,0 +1,309 @@
+/** General */
+:root {
+	--marginSize: 3vh;
+}
+
+.flexContainer {
+	display: flex;
+}
+
+.hori {
+	flex-direction: row;
+}
+
+.vert {
+	flex-direction: column;
+}
+
+.centreContent {
+	justify-content: center;
+	align-items: center;
+}
+
+.centreText {
+	text-align: center;
+}
+
+body,
+html {
+	font-family: Satoshi-Variable;
+}
+
+/* Dividers */
+.dividerHori {
+	height: calc(var(--marginSize) / 2);
+	width: 100%;
+}
+
+.dividerVert {
+	height: 100%;
+	width: calc(var(--marginSize) / 2);
+}
+
+.circle {
+	width: 3px !important;
+	height: 3px !important;
+	border-radius: 50%;
+	background-color: #000000;
+}
+
+/** Main Content */
+.parentCont {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: calc(100% - 2 * var(--marginSize));
+	width: calc(100% - 2 * var(--marginSize));
+	margin: var(--marginSize) var(--marginSize);
+}
+
+/* Main layout */
+
+.top {
+	flex: 5;
+}
+
+.bottom {
+	flex: 4;
+}
+
+.tl {
+	border-top-left-radius: 30px !important;
+}
+
+.tr {
+	border-top-right-radius: 30px !important;
+}
+
+.bl {
+	border-bottom-left-radius: 30px !important;
+}
+
+.br {
+	border-bottom-right-radius: 30px !important;
+}
+
+.bg {
+	position: fixed;
+	top: 0;
+	left: 0;
+	margin: 0;
+	height: 100vh;
+	width: 100vw;
+	/* background: url("https://4.img-dpreview.com/files/p/E~TS590x0~articles/3925134721/0266554465.jpeg"); */
+}
+
+/** Cards */
+.card {
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 10px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	-webkit-backdrop-filter: blur(8.8px);
+	backdrop-filter: blur(8.8px);
+	border: 1px solid rgba(255, 255, 255, 0.49);
+}
+
+.flexContainer {
+	/* outline: red solid 1px; */
+}
+
+.flexContainer p:has(#temp) {
+	display: flex;
+	justify-content: center;
+}
+
+/** Top half */
+/* .top {
+} */
+
+.daySum {
+	flex: 4;
+}
+
+.top > div:has(:not(.daySum)) {
+	flex: 5;
+}
+
+.top > div:has(:not(.daySum)) .card {
+	flex: 1;
+}
+
+/* Day summary */
+.daySum > div {
+	height: 90%;
+	width: 75%;
+}
+
+.daySum h1 {
+	margin-top: 0;
+	font-weight: 500;
+	text-align: center;
+}
+
+.daySum > div > div:has(.icn) .icn {
+	height: 240px;
+	width: 231px;
+	/* outline: 1px solid limegreen; */
+}
+
+/* .daySum > div > div:has(#highTemp) {
+	background: red;
+} */
+
+.daySum p:has(#feelsLikeTemp) {
+	margin: 0;
+	margin-bottom: 0.5em;
+	font-size: 1.5em;
+	font-weight: 350;
+}
+
+.daySum p:has(#highTemp, #lowTemp) {
+	margin: 0;
+	font-size: 2em;
+	font-weight: 450;
+}
+
+.daySum .circle {
+	margin: 0 10px 0 10px;
+}
+
+.daySum #temp {
+	color: transparent;
+	background: linear-gradient(#000000 50%, #0000008a 90%);
+	background-clip: text;
+	/* Looks kind of off so disabling until I can properly figure it out */
+	/* text-shadow: 7px 7px 10px white; */
+}
+
+.daySum p:has(#temp) {
+	font-size: 10vw;
+	font-weight: 500;
+}
+
+.daySum img {
+	max-width: 80%;
+}
+
+.daySum > div > div:has(img) {
+	flex-direction: row;
+	gap: 2vw;
+}
+
+#wtrCode {
+	display: flex;
+	height: 100%;
+	width: 50%;
+	align-items: center;
+}
+
+/* Second additional */
+.container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	display: flex;
+	height: 85%;
+	width: 85%;
+	gap: 15px;
+}
+
+.container > * {
+	flex: 1;
+	border-radius: 10vw !important;
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 10px;
+	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+	-webkit-backdrop-filter: blur(8.8px);
+	backdrop-filter: blur(8.8px);
+	border: 1px solid rgba(255, 255, 255, 0.49);
+}
+
+.container img {
+	width: 50%;
+}
+
+/** Bottom half */
+/* Card */
+/* .bottom {
+	
+} */
+
+/* Graph */
+.graph {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.graph > div {
+	position: absolute;
+	bottom: 0;
+	height: 100%;
+	width: 100%;
+	flex: 1;
+}
+
+.graph canvas {
+	width: 100% !important;
+	/* For old Chromium support */
+	-webkit-mask-image: linear-gradient(
+		rgba(255, 255, 255, 0.7) 50%,
+		rgba(255, 255, 255, 0) 85%
+	);
+	mask-image: linear-gradient(
+		rgba(255, 255, 255, 0.7) 50%,
+		rgba(255, 255, 255, 0) 85%
+	);
+}
+
+/* Text timeline */
+.tempTimeline {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+	bottom: 25px;
+	display: flex;
+	flex-direction: row;
+	width: 98%;
+}
+
+.tempTimeline > div {
+	flex: 1;
+}
+
+.tempTimeline > div > div {
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.tempTimeline .circle {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+p:has(#temp) {
+	font-size: 3em;
+	margin: 0;
+}
+
+.tempTimeline > div > div:has(svg) {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	transform: translate(0, -30%);
+	width: 110px;
+	zoom: 0.75;
+}
+
+.tempTimeline > div > div:has(svg) p {
+	/* position: relative; */
+	margin-top: 0;
+	margin-bottom: auto;
+}
+
+#time {
+	margin: 0;
+}

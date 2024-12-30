@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,51 +35,169 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-if (localStorage.getItem("target") === null || localStorage.getItem("key") === null) {
-    localStorage.setItem("key", prompt("Please enter your Tomorrow.io API key:"));
-    localStorage.setItem("location", prompt("Please enter your location (lat: [lat], lon: [lon]):"));
+Object.defineProperty(exports, "__esModule", { value: true });
+var wtrCodeAssociations = {
+    "0": "",
+    "1000": "./resources/ico/main/Day/sunny.png",
+    "1100": "./resources/ico/main/Day/pcloudy.png",
+    "1101": "./resources/ico/main/Day/pcloudy.png",
+    "1102": "./resources/ico/main/Day/mcloudy.png",
+    "1001": "./resources/ico/main/Day/Cloudy.png",
+    "2000": "./resources/ico/main/Day/Foggy.png",
+    "2100": "./resources/ico/main/Day/Foggy.png",
+    "4000": "./resources/ico/main/Day/Lrain.png",
+    "4001": "./resources/ico/main/Day/Rain.png",
+    "4200": "./resources/ico/main/Day/Lrain.png",
+    "4201": "./resources/ico/main/Day/Rain.png",
+    "5000": "./resources/ico/main/Day/Snow.png",
+    "5001": "./resources/ico/main/Other/lsnow.png",
+    "5100": "./resources/ico/main/Other/lsnow.png",
+    "5101": "./resources/ico/main/other/Snow.png",
+    "6001": "./resources/ico/main/other/sleet.png",
+    "6200": "./resources/ico/main/other/sleet.png",
+    "6201": "./resources/ico/main/other/sleet.png",
+    "7000": "./resources/ico/main/Day/hail.png",
+    "7101": "./resources/ico/main/Day/hail.png",
+    "7102": "./resources/ico/main/Day/hail.png",
+    "8000": "./resources/ico/main/Day/TStorm.png",
+};
+if (localStorage.getItem("location") === null ||
+    localStorage.getItem("key") === null) {
+    var x = prompt("Please enter your Tomorrow.io API key:");
+    var y = prompt("Please enter your location");
+    localStorage.setItem("key", x);
+    localStorage.setItem("location", y);
+    window.alert("Saved in localstorage. Refresh after data fetch to view the chart.");
 }
-var API_KEY = localStorage.getItem("key");
-var LOCATION = JSON.parse("{ " + localStorage.getItem("location" + " }")); // Coordinates for North Sydney
-var API_URL = "https://api.tomorrow.io/v4/timelines?location=".concat(LOCATION.lat, ",").concat(LOCATION.lon, "&fields=temperature,precipitationProbability&timesteps=1h&units=metric&apikey=").concat(API_KEY);
-function getWeatherData() {
+var dp = 0;
+var key = localStorage.getItem("key");
+var target = localStorage.getItem("location");
+var api = "https://api.tomorrow.io/v4/timelines?location=".concat(target, "&fields=weatherCode,temperature,precipitationProbability,precipitationIntensity,temperatureApparent,temperatureMax,temperatureMin&timesteps=1h,1d,current&units=metric&apikey=").concat(key);
+function getWeatherData(x) {
     return __awaiter(this, void 0, void 0, function () {
-        var response, data, currentWeather, currentTemperature, currentPrecipitation, i, hourlyWeather, temperature, precipitation, time, error_1;
+        var _t, _tslu, _frequency, data, response, data, error_1, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 3, , 4]);
-                    return [4 /*yield*/, fetch(API_URL)];
+                    _t = Date.now();
+                    _tslu = localStorage.getItem("timeSinceLastUpdate");
+                    _frequency = 60000;
+                    if (!(x == true)) return [3 /*break*/, 1];
+                    console.log("[WTR] [DTA] Using cached data.");
+                    data = JSON.parse(localStorage.getItem("data"));
+                    return [2 /*return*/, data];
                 case 1:
+                    if (!(_t - parseInt(_tslu) >= _frequency || _tslu == null)) return [3 /*break*/, 7];
+                    _a.label = 2;
+                case 2:
+                    _a.trys.push([2, 5, , 6]);
+                    console.log("[WTR] [DTA] Fetching new data");
+                    return [4 /*yield*/, fetch(api)];
+                case 3:
                     response = _a.sent();
                     if (!response.ok) {
-                        throw new Error("HTTP error! status: ".concat(response.status));
+                        throw new Error("[WTR] [DTA] Failed to fetch weather data");
+                    }
+                    else {
+                        console.log("[WTR] [DTA] Request sent");
                     }
                     return [4 /*yield*/, response.json()];
-                case 2:
+                case 4:
                     data = _a.sent();
-                    currentWeather = data.data.timelines[0].intervals[0];
-                    currentTemperature = currentWeather.values.temperature;
-                    currentPrecipitation = currentWeather.values.precipitationProbability;
-                    console.log("Current temperature: ".concat(currentTemperature, "\u00B0C"));
-                    console.log("Current rain probability: ".concat(currentPrecipitation, "%"));
-                    // Extract next 12 hours weather data (hourly)
-                    console.log("Next 24-hour forecast for North Sydney:");
-                    for (i = 0; i < 12; i++) {
-                        hourlyWeather = data.data.timelines[0].intervals[i];
-                        temperature = hourlyWeather.values.temperature;
-                        precipitation = hourlyWeather.values.precipitationProbability;
-                        time = hourlyWeather.startTime;
-                        console.log("Time: ".concat(time, ", Temperature: ").concat(temperature, "\u00B0C, Rain Probability: ").concat(precipitation, "%"));
-                    }
-                    return [3 /*break*/, 4];
-                case 3:
+                    console.log("[WTR] [DTA] Data fetched");
+                    localStorage.setItem("data", JSON.stringify(data));
+                    localStorage.setItem("timeSinceLastUpdate", Date.now().toString());
+                    return [2 /*return*/, data];
+                case 5:
                     error_1 = _a.sent();
-                    console.error("Error fetching the weather data:", error_1);
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/];
+                    console.error("[WTR] [CRT] [GWD] ", error_1);
+                    return [3 /*break*/, 6];
+                case 6: return [3 /*break*/, 8];
+                case 7:
+                    console.log("[WTR] [DTA] It hasn't been ".concat(_frequency, "ms since the last fetch. Using cached data."));
+                    data = JSON.parse(localStorage.getItem("data"));
+                    return [2 /*return*/, data];
+                case 8: return [2 /*return*/];
             }
         });
     });
 }
-getWeatherData();
+function updateWeatherDisplay() {
+    return __awaiter(this, void 0, void 0, function () {
+        var error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, getWeatherData().then(function (data) {
+                            var hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
+                            var dailyWeatherData = data.data.timelines[0].intervals.slice(0, 6);
+                            var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
+                            console.log("[WTR] [LOG] Updating realtime information");
+                            var wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
+                            document.getElementById("location").textContent =
+                                String(target).charAt(0).toUpperCase() + String(target).slice(1); // Replace with actual location data if needed
+                            document.getElementById("temp").textContent =
+                                realtimeWeatherData.temperature.toFixed(dp);
+                            document.getElementById("feelsLikeTemp").textContent =
+                                realtimeWeatherData.temperatureApparent.toFixed(dp);
+                            document.getElementById("highTemp").textContent =
+                                realtimeWeatherData.temperatureMax.toFixed(dp);
+                            document.getElementById("lowTemp").textContent =
+                                realtimeWeatherData.temperatureMin.toFixed(dp);
+                            document.getElementById("wtrCode").innerHTML = "<img src=\"".concat(wtrCodeIco, "\"></img>");
+                            console.log("[WTR] [LOG] Realtime information updated");
+                            console.log("[WTR] [LOG] Updating hourly forecast");
+                            hourlyWeatherData.forEach(function (_interval, _index) {
+                                var _tempEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #temp"));
+                                var _chanceEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #chance"));
+                                var _rainEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #rain"));
+                                var _timeEl = document.querySelector("[data-time=\"".concat(_index + 1, "\"] #time"));
+                                _tempEl.textContent = _interval.values.temperature.toFixed(dp);
+                                _chanceEl.textContent =
+                                    _interval.values.precipitationProbability.toFixed(dp);
+                                _rainEl.textContent =
+                                    _interval.values.precipitationIntensity.toFixed(dp);
+                                _timeEl.textContent = new Date(_interval.startTime)
+                                    .toLocaleTimeString([], {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: false,
+                                })
+                                    .replace(":", "");
+                            });
+                            console.log(dailyWeatherData);
+                            console.log(data);
+                            dailyWeatherData.forEach(function (_interval, _index) {
+                                var __index = _index + 1;
+                                if (__index == 6)
+                                    return;
+                                var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+                                var _day = document.querySelector("[data-day=\"".concat(__index, "\"] #day"));
+                                var _wtrCo = document.querySelector("[data-day=\"".concat(__index, "\"] #wtrCo"));
+                                var _temp = document.querySelector("[data-day=\"".concat(__index, "\"] #dTemp"));
+                                _day.textContent = days[new Date(_interval.startTime).getDay() + 1];
+                                _wtrCo.src = wtrCodeAssociations[_interval.values.weatherCode];
+                                _temp.textContent = _interval.values.temperature.toFixed(dp) + "°";
+                            });
+                            document.querySelector("#time").innerHTML = "Now";
+                            console.log("[WTR] [LOG] Hourly forecast updated");
+                            // console.log(hourlyWeatherData);
+                        })];
+                case 1:
+                    _a.sent();
+                    return [3 /*break*/, 3];
+                case 2:
+                    error_2 = _a.sent();
+                    console.error("[WTR] [CRT] [UPD]", error_2);
+                    return [3 /*break*/, 3];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+// Call the function to update the display on load
+updateWeatherDisplay();
+// .then(() => {
+// 	updateTempGraph();
+// });
