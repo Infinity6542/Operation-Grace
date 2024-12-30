@@ -1,14 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 //TODO: Make the notification system
-var notif = /** @class */ (function () {
-    function notif(title, msg, icn) {
+class notif {
+    constructor(title, msg, icn) {
         this.title = title;
         this.msg = msg;
         this.icn = icn;
     }
-    return notif;
-}());
-var clock = /** @class */ (function () {
-    function clock(type) {
+}
+class clock {
+    constructor(type) {
         if (type == "digital") {
             //TODO: Implement solaris digital clock
             // Will probably use this:
@@ -21,5 +22,5 @@ var clock = /** @class */ (function () {
             // but animated.
         }
     }
-    return clock;
-}());
+}
+//# sourceMappingURL=notifs.js.map
