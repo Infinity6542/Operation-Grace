@@ -89,6 +89,8 @@ async function updateWeatherDisplay() {
 		await getWeatherData().then((data) => {
 			const hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
 			const dailyWeatherData = data.data.timelines[0].intervals.slice(0, 6);
+			const dayWeatherData = data.data.timelines[0].intervals.slice(0, 6)[0]
+				.values;
 			const realtimeWeatherData = data.data.timelines[2].intervals[0].values;
 			console.log("[WTR] [LOG] Updating realtime information");
 			let wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
@@ -97,11 +99,11 @@ async function updateWeatherDisplay() {
 			(document.getElementById("temp") as HTMLElement).textContent =
 				realtimeWeatherData.temperature.toFixed(dp);
 			(document.getElementById("feelsLikeTemp") as HTMLElement).textContent =
-				realtimeWeatherData.temperatureApparent.toFixed(dp);
+				dayWeatherData.temperatureApparent.toFixed(dp);
 			(document.getElementById("highTemp") as HTMLElement).textContent =
-				realtimeWeatherData.temperatureMax.toFixed(dp);
+				dayWeatherData.temperatureMax.toFixed(dp);
 			(document.getElementById("lowTemp") as HTMLElement).textContent =
-				realtimeWeatherData.temperatureMin.toFixed(dp);
+				dayWeatherData.temperatureMin.toFixed(dp);
 			(
 				document.getElementById("wtrCode") as HTMLElement
 			).innerHTML = `<img src="${wtrCodeIco}"></img>`;

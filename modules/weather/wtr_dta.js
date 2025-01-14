@@ -132,6 +132,8 @@ function updateWeatherDisplay() {
                     return [4 /*yield*/, getWeatherData().then(function (data) {
                             var hourlyWeatherData = data.data.timelines[1].intervals.slice(0, 12);
                             var dailyWeatherData = data.data.timelines[0].intervals.slice(0, 6);
+                            var dayWeatherData = data.data.timelines[0].intervals.slice(0, 6)[0]
+                                .values;
                             var realtimeWeatherData = data.data.timelines[2].intervals[0].values;
                             console.log("[WTR] [LOG] Updating realtime information");
                             var wtrCodeIco = wtrCodeAssociations[realtimeWeatherData.weatherCode];
@@ -140,11 +142,11 @@ function updateWeatherDisplay() {
                             document.getElementById("temp").textContent =
                                 realtimeWeatherData.temperature.toFixed(dp);
                             document.getElementById("feelsLikeTemp").textContent =
-                                realtimeWeatherData.temperatureApparent.toFixed(dp);
+                                dayWeatherData.temperatureApparent.toFixed(dp);
                             document.getElementById("highTemp").textContent =
-                                realtimeWeatherData.temperatureMax.toFixed(dp);
+                                dayWeatherData.temperatureMax.toFixed(dp);
                             document.getElementById("lowTemp").textContent =
-                                realtimeWeatherData.temperatureMin.toFixed(dp);
+                                dayWeatherData.temperatureMin.toFixed(dp);
                             document.getElementById("wtrCode").innerHTML = "<img src=\"".concat(wtrCodeIco, "\"></img>");
                             console.log("[WTR] [LOG] Realtime information updated");
                             console.log("[WTR] [LOG] Updating hourly forecast");
