@@ -15,7 +15,7 @@ This section will walk through how to set up OpGrace for the first time using th
 <sup>Want access to the latest bleeding edge features? Download the source code from the Buffer or, if you dare, the Development branch to gain access to the latest and (sometimes) greatest!</sup>
 
 > [!IMPORTANT]
-> In some instances, OpGrace will require the PocketBase backend in order to run. To do this, simply `cd` into `path/to/core/pb` and run the command `./pocketbase serve`.
+> In some instances, OpGrace will require the PocketBase backend in order to run. To do this, simply `cd` into `path/to./core/pb` and run the command `./pocketbase serve`.
 
 1. Firstly, ensure that the Internet Information Services (IIS) is enabled. Head to the `Start Menu > Turn Windows features on or off > ENABLE Internet Information Services`.
 2. Open the IIS Manager through a program of your choice (or just use the Start Menu).

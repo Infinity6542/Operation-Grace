@@ -1,7 +1,7 @@
 //TODO: Implement announcements collection in PB
 //TODO: Migrate to AppWrite
-import stack from "/modules/announcements/pb.js";
-import Queue from "/core/lib/queue.js";
+import stack from "../../modules/announcements/pb.js";
+import Queue from "./queue.js";
 
 console.log("%cWelcome to Operation Grace", "font-size: 20px;");
 console.log("%cOperation Grace version 0.0.2", "color: #3780cc;");
@@ -113,12 +113,12 @@ const queue = new Queue();
 // Remove before putting into production
 //TODO: Move test screens into the Modules collection implementation
 console.log(
-  queue.queue(new el("/core/tests/blue.html", "slide_right_left", 10000))
+  queue.queue(new el("../tests/blue.html", "slide_right_left", 10000))
 );
-console.log(queue.queue(new el("/core/tests/red.html", "scale", 10000)));
-console.log(queue.queue(new el("/core/tests/green.html", "opacity", 10000)));
+console.log(queue.queue(new el("../tests/red.html", "scale", 10000)));
+console.log(queue.queue(new el("../tests/green.html", "opacity", 10000)));
 console.log(
-  queue.queue(new el("/core/tests/yellow.html", "slide_left_right", 10000))
+  queue.queue(new el("../tests/yellow.html", "slide_left_right", 10000))
 );
 // Adding announcement screens to queue
 for (let i = stack.length; i > 0; i--) {
