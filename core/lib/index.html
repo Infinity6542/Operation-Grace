@@ -1,44 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      console.log("Fetching scripts...")
-    </script>
-    <link rel="stylesheet" href="./main.css" />
-    <link rel="stylesheet" href="./animations.css" />
-    <script type="module" src="/core/pb/dist/pocketbase.umd.js"></script>
-    <script type="module" src="./main.js"></script>
-    <script type="module" src="./notifs.js"></script>
-    <script>
-      console.log("Scripts fetched.")
-    </script>
-    <title>Operation Grace</title>
-  </head>
-  <body>
-    <iframe src="" frameborder="0" data-id="0" data-active="" id="0" class="">
-      <h1>h</h1>
-      <p>
-        This browser doesn't support the features needed to display this
-        content. Try using an up-to-date of the objectively and arguably better
-        browser,
-        <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox.</a>
-      </p></iframe
-    >
-    <iframe src="" frameborder="0" data-id="1" data-active="" id="1" class="">
-      >
-      <h1>h</h1>
-      <p>
-        This browser doesn't support the features needed to display this
-        content. Try using an up-to-date of the objectively and arguably better
-        browser,
-        <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox.</a>
-      </p></iframe
-    >
-    <div id="sidebar">
-      <div id="notibar">
-        <!-- This is an example of a notification
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script>
+			console.log("Fetching scripts...");
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.1"></script>
+		<script>
+			const { Client } = Appwrite;
+			const client = new Client();
+			client
+				.setEndpoint("https://cloud.appwrite.io/v1")
+				.setProject("67fca271003ddccfde44");
+		</script>
+		<link rel="stylesheet" href="./main.css" />
+		<link rel="stylesheet" href="./animations.css" />
+		<script type="module" src="/core/pb/dist/pocketbase.umd.js"></script>
+		<script type="module" src="./main.js"></script>
+		<script type="module" src="./notifs.js"></script>
+		<script>
+			console.log("Scripts fetched.");
+		</script>
+		<title>Operation Grace</title>
+	</head>
+	<body>
+		<iframe src="" frameborder="0" data-id="0" data-active="" id="0" class="">
+			<h1>h</h1>
+			<p>
+				This browser doesn't support the features needed to display this
+				content. Try using an up-to-date of the objectively and arguably better
+				browser,
+				<a href="https://www.mozilla.org/en-US/firefox/new/">Firefox.</a>
+			</p></iframe
+		>
+		<iframe src="" frameborder="0" data-id="1" data-active="" id="1" class="">
+			>
+			<h1>h</h1>
+			<p>
+				This browser doesn't support the features needed to display this
+				content. Try using an up-to-date of the objectively and arguably better
+				browser,
+				<a href="https://www.mozilla.org/en-US/firefox/new/">Firefox.</a>
+			</p></iframe
+		>
+		<div id="sidebar">
+			<div id="notibar">
+				<!-- This is an example of a notification
         <div class="notif" data-pinned="false">
           <div class="header"></div>
           <div class="body"></div>
@@ -46,14 +54,14 @@
         </div>
         -->
 
-        <!-- This is an example of a pinned item, such as time
+				<!-- This is an example of a pinned item, such as time
         <div class="notif" data-pinned="true">
           <div class="header"></div>
           <div class="content"></div>
         </div>
         -->
-        <!-- Modules may add custom templates or classes to alter the look or function of notifications-->
-      </div>
-    </div>
-  </body>
+				<!-- Modules may add custom templates or classes to alter the look or function of notifications-->
+			</div>
+		</div>
+	</body>
 </html>
