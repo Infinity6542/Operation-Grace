@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Manager - Operation Grace</title>
+		<script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.1"></script>
+		<script>
+			const client = new Appwrite.Client();
+			client
+			.setEndpoint("https://cloud.appwrite.io/v1")
+			.setProject("67fca271003ddccfde44");
+			const account = new Appwrite.Account(client);
+			const urlParams = new URLSearchParams(window.location.search);
+			const secret = urlParams.get('secret');
+			const userId = urlParams.get('userId');
+			// const user = account.createSession(userId, secret);
+			console.log(account.getSession("current"))
+		</script>
+		<link
+			rel="stylesheet"
+			href="/manager/resources/fonts/satoshi/Fonts/WEB/css/satoshi.css"
+		/>
+		<link rel="stylesheet" href="/manager/styles/main.css" />
+		<script src="/manager/scripts/main.js"></script>
+	</head>
+	<body>
+		<div
+			class="flex vert"
+			style="align-items: center; justify-content: center; height: 100vh"
+		>
+			<h1>And you are?</h1>
+			<p>
+				Just making sure that you're meant to be here. Shouldn't take too
+				long...
+			</p>
+		</div>
+	</body>
+</html>

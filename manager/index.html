@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Manager - Operation Grace</title>
+		<script src="https://cdn.jsdelivr.net/npm/appwrite@17.0.1"></script>
+		<script>
+			const client = new Appwrite.Client();
+			client
+				.setEndpoint("https://cloud.appwrite.io/v1")
+				.setProject("67fca271003ddccfde44");
+
+			const account = new Appwrite.Account(client);
+
+			async function result() {
+				let result = await account.createMagicURLToken(
+					"67fcf355000a74b58cc2", // userId
+					"james.chen41@education.nsw.gov.au", // email
+					"http://localhost:5500/manager/dashboard.html", // url (optional)
+				);
+				return result;
+			}
+
+			console.log(result());
+		</script>
+		<link
+			rel="stylesheet"
+			href="/manager/resources/fonts/satoshi/Fonts/WEB/css/satoshi.css"
+		/>
+		<link rel="stylesheet" href="/manager/styles/main.css" />
+		<script src="/manager/scripts/main.js"></script>
+	</head>
+	<body>
+		<div
+			class="flex vert"
+			style="align-items: center; justify-content: center; height: 100vh"
+		>
+			<h1>Just a <span class="halfAccent green">sec</span>...</h1>
+			<p>
+				Sorry for the holdup. We're just trying to figure out where out where
+				you send you—<span class="halfAccent blue">shouldn't take too long</span
+				>...
+			</p>
+		</div>
+	</body>
+</html>
