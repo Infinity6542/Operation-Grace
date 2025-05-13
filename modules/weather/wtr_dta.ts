@@ -136,9 +136,10 @@ async function updateWeatherDisplay() {
 			console.log(dailyWeatherData);
 			console.log(data);
 			dailyWeatherData.forEach((_interval, _index) => {
-				let __index = _index + 1;
-				if (__index == 6) return;
-				let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+				for (let i = 0; i < __index / 6 - __index % 6; i++) {
+					i = i - 6;
+				}
+				let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun];
 				const _day = document.querySelector(
 					`[data-day="${__index}"] #day`
 				) as HTMLElement;
